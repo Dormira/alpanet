@@ -23,6 +23,7 @@ public class wiggle : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+  //      if (Input.GetKeyDown("w"))
         if (Input.GetKeyDown("w"))
         {
             //Change the model vertices
@@ -36,6 +37,15 @@ public class wiggle : MonoBehaviour {
             model.uv = nuv;
             model.triangles = nt;
             MeshUtility.Optimize(model);
+        }
+
+        if (Input.GetKeyDown("q"))
+        {
+            for (int i = 0; i < model.vertices.Length; i += 3)
+            {
+                UnityEngine.Debug.Log(model.vertices[i] +" "+ model.vertices[i + 1] +" "+ model.vertices[i + 2]);
+                UnityEngine.Debug.Log(PlaneEquation(model.vertices.Skip(i).Take(3).ToArray()));
+            }
         }
         //        moveToTargetLocation();
     }
@@ -100,7 +110,7 @@ public class wiggle : MonoBehaviour {
         {
               do
               {
-                UnityEngine.Debug.Log((i + 3) + "/"+ oldVertices.Count());
+         //       UnityEngine.Debug.Log((i + 3) + "/"+ oldVertices.Count());
                 
                 Vector3[] triangle = oldVertices.Skip(i).Take(3).ToArray();
 
@@ -151,7 +161,7 @@ public class wiggle : MonoBehaviour {
                         }
                         else
                         {
-                            UnityEngine.Debug.Log("Invalid Triangle");
+                  //          UnityEngine.Debug.Log("Invalid Triangle");
                             invalidTriangle = true;
                         }
 
@@ -159,7 +169,7 @@ public class wiggle : MonoBehaviour {
                     }
                 }
                 if(!invalidTriangle){
-                    UnityEngine.Debug.Log("Triangle Updated");
+               //     UnityEngine.Debug.Log("Triangle Updated");
                     freshVertices[i] = triangle[0];
                     freshVertices[i + 1] = triangle[1];
                     freshVertices[i + 2] = triangle[2];
@@ -201,13 +211,9 @@ public class wiggle : MonoBehaviour {
 
         Vector3 normal = Vector3.Cross(ab, ac);
 
-        float a = ab[1] * ac[2] - ac[2] * ab[2];
-        float b = ac[0] * ab[2] - ab[0] * ac[2];
-        float c = ab[0] * ac[2] - ab[1] * ac[0];
+        float d = normal[0] * t0[0] + normal[1] * t0[1] + normal[2] * t0[2];
 
-        float d = -(a) * t0[0] - (b) * t0[1] - (c) * t0[2];
-
-        return (a, b, c, d);
+        return (normal[0], normal[1], normal[2], d);
     }
 }
 
