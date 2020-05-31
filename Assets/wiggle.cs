@@ -19,11 +19,11 @@ public class wiggle : MonoBehaviour {
     void Start() {
         MeshFilter viewedModelFilter = (MeshFilter)this.GetComponent("MeshFilter");
         model = viewedModelFilter.mesh;
+        GeometryFunctions.weldVertices(model);
     }
 
     // Update is called once per frame
     void Update() {
-  //      if (Input.GetKeyDown("w"))
         if (Input.GetKeyDown("w"))
         {
             //Change the model vertices
@@ -41,11 +41,19 @@ public class wiggle : MonoBehaviour {
 
         if (Input.GetKeyDown("q"))
         {
-            for (int i = 0; i < model.vertices.Length; i += 3)
-            {
-                UnityEngine.Debug.Log(model.vertices[i] +" "+ model.vertices[i + 1] +" "+ model.vertices[i + 2]);
-                UnityEngine.Debug.Log(PlaneEquation(model.vertices.Skip(i).Take(3).ToArray()));
-            }
+            Vector3[] triangleA = new Vector3[3];
+            triangleA[0] = new Vector3(-0.5f, 0.5f, 0.4f);
+            triangleA[1] = new Vector3(0.4f, 0.5f, 0.5f);
+            triangleA[2] = new Vector3(0.4f, -0.5f, 0.4f);
+
+
+            Vector3[] triangleB = new Vector3[3];
+            triangleB[0] = new Vector3(-0.5f, 0.5f, -0.5f);
+            triangleB[1] = new Vector3(0.4f, 0.5f, -0.6f);
+            triangleB[2] = new Vector3(0.4f, 0.5f, 0.5f);
+
+            GeometryFunctions.trianglesDefinitelyDontIntersect(triangleA, triangleB);
+
         }
         //        moveToTargetLocation();
     }
@@ -72,6 +80,7 @@ public class wiggle : MonoBehaviour {
                                      UnityEngine.Random.Range(vector[2] - diff, vector[2] + diff));
         return newVector;
     }
+
     Vector2[] newUV(Vector3[] vertices)
     {
         Vector2[] uvs = new Vector2[vertices.Length];
@@ -86,31 +95,70 @@ public class wiggle : MonoBehaviour {
     Vector3[] newVertices()
     {
         Vector3[] oldVertices = model.vertices;
+        int[] triangles = model.triangles;
+
+        Vector3[] newVertices = new Vector3[oldVertices.Length];
+
+        bool verticesUpdatedSuccessfully = false;
+        do
+        {
+            verticesUpdatedSuccessfully = true;
+            //Modify the vertices
+            for (int i = 0; i < newVertices.Length; i++)
+            {
+                newVertices[i] = wiggleVector3(oldVertices[i], 0.1f);
+            }
+
+            //Check the triangles for collisions
+            for (int i = 0; i < triangles.Count(); i += 3)
+            {
+            //    int[] triangleA = triangles.Skip(i).Take(3).ToArray();
+                Vector3[] triangleA = triangles.Skip(i).Take(3).Select(x => newVertices[x]).ToArray();
+                for (int j = i + 3; j < triangles.Count(); j += 3)
+                {
+               //     Vector3 triangleB = triangles.Skip(j).Take(3).ToArray();
+                    Vector3[] triangleB = triangles.Skip(j).Take(3).Select(x => newVertices[x]).ToArray();
+
+                    if (!GeometryFunctions.trianglesDefinitelyDontIntersect(triangleA, triangleB))
+                    {
+                        verticesUpdatedSuccessfully = false;
+                        break;
+                    }
+                }
+            }
+        } while (!verticesUpdatedSuccessfully);
+
+        return newVertices;
+    }
+    //Vertices are going to have to be added three at a time because that's what forms a new triangle
+    //For every three vertices in vertices
+    //if vertex exists in vertex_conversions then new vertex is the conversion
+    //otherwise random offset the vertex and add to dict (BUT DON'T MARRY IT TO THE DICTIONARY)
+    //For every three vertices in newVertices
+    //does the triangle we just generated intersect?
+    //compute plane equation of new triangle//DONEZO
+    //are all points of old triangle on the same side, if so not intersecting //DONEZO
+    //compute plane equation of old triangle//DONEZO
+    //are all points of new triangle on the same side as old triangle, if so not intersecting
+    //compute intersection line and project onto largest axis (what do this mean)
+    //compute the intervals for each triangle (whats an interval)
+    //intersect the intervals
+    //if no, add to newVertices
+    //otherwise try again
+    /*
+    Vector3[] newVertices_deprecated()
+    {
+        Vector3[] oldVertices = model.vertices;
         Vector3[] freshVertices = new Vector3[oldVertices.Count()];
 
         Dictionary<Vector3, Vector3> vertexConversions = new Dictionary<Vector3, Vector3>();
 
-        //Vertices are going to have to be added three at a time because that's what forms a new triangle
-        //For every three vertices in vertices
-        //if vertex exists in vertex_conversions then new vertex is the conversion
-        //otherwise random offset the vertex and add to dict (BUT DON'T MARRY IT TO THE DICTIONARY)
-        //For every three vertices in newVertices
-        //does the triangle we just generated intersect?
-        //compute plane equation of new triangle//DONEZO
-        //are all points of old triangle on the same side, if so not intersecting //DONEZO
-        //compute plane equation of old triangle//DONEZO
-        //are all points of new triangle on the same side as old triangle, if so not intersecting
-        //compute intersection line and project onto largest axis (what do this mean)
-        //compute the intervals for each triangle (whats an interval)
-        //intersect the intervals
-        //if no, add to newVertices
-        //otherwise try again
+
         bool updatedTriangle;
         for (int i = 0; i < oldVertices.Count(); i += 3)
         {
               do
               {
-         //       UnityEngine.Debug.Log((i + 3) + "/"+ oldVertices.Count());
                 
                 Vector3[] triangle = oldVertices.Skip(i).Take(3).ToArray();
 
@@ -136,84 +184,49 @@ public class wiggle : MonoBehaviour {
                     updatedTriangle = true;
                 }
                 float newa, newb, newc, newd;
-                (newa, newb, newc, newd) = PlaneEquation(triangle);
-                for (int j = 0; j <= i; j += 3)//j+3 or i-3 for middle part
+                (newa, newb, newc, newd) = GeometryFunctions.planeEquation(triangle);
+                for (int j = 0; j <= i; j += 3)
                 {
-                 //   UnityEngine.Debug.Log((j + 3) + "/INNER/" + i);
                     invalidTriangle = false;
                     Vector3 vertexA = freshVertices[j];
                     Vector3 vertexB = freshVertices[j+1];
                     Vector3 vertexC = freshVertices[j+2];
 
                     //Is the current triangle in freshVertices on the same side of the plane of our newly generated triangle?
-                    if (pointsOnSameSide(vertexA, vertexB, newa, newb, newc, newd) && pointsOnSameSide(vertexA, vertexC, newa, newb, newc, newd))
+                    if (GeometryFunctions.pointsOnSameSide(vertexA, vertexB, newa, newb, newc, newd) && GeometryFunctions.pointsOnSameSide(vertexA, vertexC, newa, newb, newc, newd))
                     {
                         continue;
                     }
                     else
                     {
-                        //Is our newly generated triangle on the same side of the plane as our current triangle?
                         float olda, oldb, oldc, oldd;
-                        (olda, oldb, oldc, oldd) = PlaneEquation(freshVertices.Skip(j).Take(3).ToArray());
-                        if (pointsOnSameSide(triangle[0], triangle[1], olda, oldb, oldc, oldd) && pointsOnSameSide(triangle[0], triangle[2], olda, oldb, oldc, oldd))
+                        (olda, oldb, oldc, oldd) = GeometryFunctions.planeEquation(freshVertices.Skip(j).Take(3).ToArray());
+                        if (GeometryFunctions.pointsOnSameSide(triangle[0], triangle[1], olda, oldb, oldc, oldd) && GeometryFunctions.pointsOnSameSide(triangle[0], triangle[2], olda, oldb, oldc, oldd))
                         {
                             continue;
                         }
                         else
                         {
-                  //          UnityEngine.Debug.Log("Invalid Triangle");
                             invalidTriangle = true;
                         }
 
-                   //     UnityEngine.Debug.Log("BEEFED IT ");
                     }
                 }
                 if(!invalidTriangle){
-               //     UnityEngine.Debug.Log("Triangle Updated");
                     freshVertices[i] = triangle[0];
                     freshVertices[i + 1] = triangle[1];
                     freshVertices[i + 2] = triangle[2];
-                  //  i += 3;
                     updatedTriangle = true;
                     
                 }
-                //don't break the loop until we've updated a triangle
             } while (!updatedTriangle );
-            //Put a while len(newvertices) != i (+3)
-            //Generate a new triangle
             
 
 
         }
         return freshVertices;
     }
-    //TODO move general math functions to their own file
-    bool pointsOnSameSide(Vector3 pointA, Vector3 pointB, float a, float b, float c, float d)
-    {
-        float res1 = pointA[0] * a + pointA[1] * b + pointA[2] * c + d;
-        float res2 = pointB[0] * a + pointB[1] * b + pointB[2] * c + d;
-        if(res1*res2 > 0)
-        {
-            return true;
-        }
-       // UnityEngine.Debug.Log("INCORRECT TRIANGLE GENERATED");
-        return false;
-    }
 
-    (float, float, float, float) PlaneEquation(Vector3[] triangle)
-    {
-        Vector3 t0 = triangle[0];
-        Vector3 t1 = triangle[1];
-        Vector3 t2 = triangle[2];
-
-        Vector3 ab = t1 - t0;
-        Vector3 ac = t2 - t0;
-
-        Vector3 normal = Vector3.Cross(ab, ac);
-
-        float d = normal[0] * t0[0] + normal[1] * t0[1] + normal[2] * t0[2];
-
-        return (normal[0], normal[1], normal[2], d);
-    }
+    */
 }
 

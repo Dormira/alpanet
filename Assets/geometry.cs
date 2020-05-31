@@ -49,114 +49,166 @@ public class GeometryFunctions{
     //This function takes THREE POINTS, NOT THREE INDICES
     public static bool trianglesDefinitelyDontIntersect(Vector3[] triangleA, Vector3[] triangleB)
     {
+        Vector3 N2 = Vector3.Cross(triangleB[1] - triangleB[0], triangleB[2] - triangleB[0]);
+        N2.Normalize();
+        float d2 = Vector3.Dot(N2 * (-1), triangleB[0]);
 
-        Vector4 planeEquationA = GeometryFunctions.planeEquation(triangleA);
-        Vector4 planeEquationB = GeometryFunctions.planeEquation(triangleB);
-      //  UnityEngine.Debug.Log("START FUNC ");
-        bool a01 = pointsOnSameSide(triangleA[0], triangleA[1], planeEquationB);
-        bool a02 = pointsOnSameSide(triangleA[0], triangleA[2], planeEquationB);
-       // UnityEngine.Debug.Log("AS: "+a01+" "+a02);
-        if (a01 && a02) {
-            return true; 
-        }
-        bool b01 = pointsOnSameSide(triangleB[0], triangleB[1], planeEquationA);
-        bool b02 = pointsOnSameSide(triangleB[0], triangleB[2], planeEquationA);
-     //   UnityEngine.Debug.Log("BS: " + b01 + " " + b02);
-        if (b01 && b02) { 
-            return true; 
-        }
-     //   UnityEngine.Debug.Log("CHECK FAILED");
-        bool a12 = pointsOnSameSide(triangleA[1], triangleA[2], planeEquationB);
-        bool b12 = pointsOnSameSide(triangleB[1], triangleB[2], planeEquationB);
-
-        Vector3 D = Vector3.Cross(new Vector3(planeEquationA[0], planeEquationA[1], planeEquationA[2]),
-            new Vector3(planeEquationB[0], planeEquationB[1], planeEquationB[2]));
-
-        //projection of vector a onto D is
-        //a dot (unit vector b) * (unit vector b)
-        //vector a1
-        //vector a2
-        //     float pa1, pa2;
-        Vector3 va1, va2;
-        if (a01)            //Its a02 and a12 on the same side
-        {
-            UnityEngine.Debug.Log()
-            va1 = triangleA[0] - triangleA[2];
-            va2 = triangleA[2] - triangleA[1];
-//
-        }
-        else if (a02)            //Its a12 and a01
-        {
-
-            va1 = triangleA[2] - triangleA[1];
-            va2 = triangleA[1] - triangleA[0];
-        }
-        else            //Its a01 and a02
-        {
-            va1 = triangleA[1] - triangleA[0];
-            va2 = triangleA[0] - triangleA[2];
-
-
-        }
-
-        Vector3 vb1, vb2;
-        if (b01)            //Its b02 and b12
-        {
-            vb1 = triangleB[0] - triangleB[2];
-            vb2 = triangleB[2] - triangleB[1]; 
-        }
-        else if (b02)            //Its b12 and b01
-        {
-            
-            vb1 = triangleB[2] - triangleB[1];
-            vb2 = triangleB[1] - triangleB[0];
-        }
-        else            //Its b01 and b02
-        {
-    
-            vb1 = triangleB[1] - triangleB[0];
-            vb2 = triangleB[0] - triangleB[2];
-        }
-
-
-        float da0 = planeEquationB[0] * va1[0] + planeEquationB[1] * va1[1] + planeEquationB[2] * va1[2] + planeEquationB[3];
-        float da1 = planeEquationB[0] * va2[0] + planeEquationB[1] * va2[1] + planeEquationB[2] * va2[2] + planeEquationB[3];
-        Vector3 ta1 = va1 + (va2 - va1) * (da0 / (da0 - da1));
-        Vector3 ta2 = va2 + (va1 - va2) * (da0 / (da0 - da1));
-
-
-        float db1 = planeEquationA[0] * vb1[0] + planeEquationA[1] * vb1[1] + planeEquationA[2] * vb1[2] + planeEquationA[3];
-        float db2 = planeEquationA[0] * vb2[0] + planeEquationA[1] * vb2[1] + planeEquationA[2] * vb2[2] + planeEquationA[3];
-        Vector3 tb1 = vb1 + (vb2 - vb1) * (db1 / (db1 - db2));
-        Vector3 tb2 = vb2 + (vb1 - vb2) * (db1 / (db1 - db2));
-
-        if(System.Math.Min(ta1[0], ta2[0]) > System.Math.Max(tb1[0], tb2[0]) ||
-           System.Math.Min(tb1[0], tb2[0]) > System.Math.Max(ta1[0], ta2[0]))
+        float da0 = Vector3.Dot(N2, triangleA[0]) + d2;
+        float da1 = Vector3.Dot(N2, triangleA[1]) + d2;
+        float da2 = Vector3.Dot(N2, triangleA[2]) + d2;
+        if(da0 != 0 && da1 != 0 && da2 != 0 && da0 > 0 && da1 > 0 && da2 > 0)
         {
             return true;
         }
-        if (System.Math.Min(ta1[1], ta2[1]) > System.Math.Max(tb1[1], tb2[1]) ||
-   System.Math.Min(tb1[1], tb2[1]) > System.Math.Max(ta1[1], ta2[1]))
+        if (da0 != 0 && da1 != 0 && da2 != 0 && da0 < 0 && da1 < 0 && da2 < 0)
         {
             return true;
         }
-        if (System.Math.Min(ta1[2], ta2[2]) > System.Math.Max(tb1[2], tb2[2]) ||
-   System.Math.Min(tb1[2], tb2[2]) > System.Math.Max(ta1[2], ta2[2]))
+        Vector3 N1 = Vector3.Cross(triangleA[1] - triangleA[0], triangleA[2] - triangleA[0]);
+        N1.Normalize();
+        float d1 = Vector3.Dot(N1 * (-1), triangleA[0]);
+
+        float db0 = Vector3.Dot(N1, triangleB[0]) + d1;
+        float db1 = Vector3.Dot(N1, triangleB[1]) + d1;
+        float db2 = Vector3.Dot(N1, triangleB[2]) + d1;
+        if (db0 != 0 && db1 != 0 && db2 != 0 && db0 > 0 && db1 > 0 && db2 > 0)
         {
             return true;
         }
-        UnityEngine.Debug.Log("TA 1 " + ta1);
-        UnityEngine.Debug.Log("TA 2 " + ta2);
-        UnityEngine.Debug.Log("TB 1 " + tb1);
-        UnityEngine.Debug.Log("TB 2 " + tb2);
-        //      UnityEngine.Debug.Log("CHECK FAILED: "+pa1+":"+pa2+","+pb1+":"+pb2);
-        UnityEngine.Debug.Log(D);
-      //  UnityEngine.Debug.Log(Vector3.Dot(D, triangleA[0]) + " " + Vector3.Dot(D, triangleA[1]) + " " + Vector3.Dot(D, triangleA[2]));
-    //    UnityEngine.Debug.Log(Vector3.Dot(D, triangleB[0]) + " " + Vector3.Dot(D, triangleB[1]) + " " + Vector3.Dot(D, triangleB[2]));
-        UnityEngine.Debug.Log("TRIANGLE A "+triangleA[0]+" "+triangleA[1]+" "+triangleA[2]);
-    //    UnityEngine.Debug.Log("PLANE EQUATION A "+planeEquationA[0]+" "+planeEquationA[1]+" "+planeEquationA[2]+" "+planeEquationA[3]);
-        UnityEngine.Debug.Log("TRIANGLE B "+triangleB[0] + " " + triangleB[1] + " " + triangleB[2]);
-    //    UnityEngine.Debug.Log("PLANE EQUATION B "+planeEquationB[0] + " " + planeEquationB[1] + " " + planeEquationB[2] + " " + planeEquationB[3]);
+        if (db0 != 0 && db1 != 0 && db2 != 0 && db0 < 0 && db1 < 0 && db2 < 0)
+        {
+            return true;
+        }
+        //coplanarity check to go here, unlikely tho can probs just skip it for now
+        //one point contact checks
+        if((da0 == 0 && da1 > 0 && da2 > 0 ) || (da0 == 0 && da1 < 0 && da2 < 0))
+        {
+            return true;
+        }
+        if ((da0 > 0 && da1 == 0 && da2 > 0) || (da0 < 0 && da1 == 0 && da2 < 0))
+        {
+            return true;
+        }
+        if ((da0 > 0 && da1 > 0 && da2 == 0) || (da0 < 0 && da1 < 0 && da2 == 0))
+        {
+            return true;
+        }
+        if ((db0 == 0 && db1 > 0 && db2 > 0) || (db0 == 0 && db1 < 0 && db2 < 0))
+        {
+            return true;
+        }
+        if ((db0 > 0 && db1 == 0 && db2 > 0) || (db0 < 0 && db1 == 0 && db2 < 0))
+        {
+            return true;
+        }
+        if ((db0 > 0 && db1 > 0 && db2 == 0) || (db0 < 0 && db1 < 0 && db2 == 0))
+        {
+            return true;
+        }
+        //two point contact checks
+        if ((da0 == 0 && da1 == 0 && da2 > 0) || (da0 == 0 && da1 == 0 && da2 < 0))
+        {
+            return true;
+        }
+        if ((da0 > 0 && da1 == 0 && da2 == 0) || (da0 < 0 && da1 == 0 && da2 == 0))
+        {
+            return true;
+        }
+        if ((da0 == 0 && da1 > 0 && da2 == 0) || (da0 == 0 && da1 < 0 && da2 == 0))
+        {
+            return true;
+        }
+        if ((db0 == 0 && db1 == 0 && db2 > 0) || (db0 == 0 && db1 == 0 && db2 < 0))
+        {
+            return true;
+        }
+        if ((db0 > 0 && db1 == 0 && db2 == 0) || (db0 < 0 && db1 == 0 && db2 == 0))
+        {
+            return true;
+        }
+        if ((db0 == 0 && db1 > 0 && db2 == 0) || (db0 == 0 && db1 < 0 && db2 == 0))
+        {
+            return true;
+        }
+
+        Vector3 D = Vector3.Cross(N1,N2);
+        D.Normalize();
+        
+        float dv0=9001, dv1= 9001, dv2= 9001;
+
+        float ta1, ta2;
+        float pa0= 9001, pa1= 9001, pa2= 9001;
+        if ((da0 > 0 && da1 <= 0 && da2 <= 0) || (da0 < 0 && da1 >= 0 && da2 >= 0))
+        {
+            pa0 = Vector3.Dot(D, triangleA[1]);
+            pa1 = Vector3.Dot(D, triangleA[0]);
+            pa2 = Vector3.Dot(D, triangleA[2]);
+            dv0 = da1;
+            dv1 = da0;
+            dv2 = da2;
+        }
+        else if ((da0 <= 0 && da1 > 0 && da2 <= 0) || (da0 >= 0 && da1 < 0 && da2 >= 0))
+        {
+            pa0 = Vector3.Dot(D, triangleA[0]);
+            pa1 = Vector3.Dot(D, triangleA[1]);
+            pa2 = Vector3.Dot(D, triangleA[2]);
+            dv0 = da0;
+            dv1 = da1;
+            dv2 = da2;
+        }
+        else if ((da0 <= 0 && da1 <= 0 && da2 > 0) || (da0 >= 0 && da1 >= 0 && da2 < 0))
+        {
+            pa0 = Vector3.Dot(D, triangleA[0]);
+            pa1 = Vector3.Dot(D, triangleA[2]);
+            pa2 = Vector3.Dot(D, triangleA[1]);
+            dv0 = da0;
+            dv1 = da2;
+            dv2 = da1;
+        }
+        ta1 = pa0 + (pa1 - pa0) * (dv0 / (dv0 - dv1));
+        ta2 = pa1 + (pa2 - pa1) * (dv1 / (dv1 - dv2));
+
+
+        float tb1, tb2;
+        float pb0 = 9001, pb1 = 9001, pb2 = 9001;
+        if ((db0 > 0 && db1 <= 0 && db2 <= 0) || (db0 < 0 && db1 >= 0 && db2 >= 0))
+        {
+            pb0 = Vector3.Dot(D, triangleB[1]);
+            pb1 = Vector3.Dot(D, triangleB[0]);
+            pb2 = Vector3.Dot(D, triangleB[2]);
+            dv0 = db1;
+            dv1 = db0;
+            dv2 = db2;
+        }
+        else if ((db0 <= 0 && db1 > 0 && db2 <= 0) || (db0 >= 0 && db1 < 0 && db2 >= 0))
+        {
+            pb0 = Vector3.Dot(D, triangleB[0]);
+            pb1 = Vector3.Dot(D, triangleB[1]);
+            pb2 = Vector3.Dot(D, triangleB[2]);
+            dv0 = db0;
+            dv1 = db1;
+            dv2 = db2;
+        }
+        else if ((db0 <= 0 && db1 <= 0 && db2 > 0) || (db0 >= 0 && db1 >= 0 && db2 < 0))
+        {
+            pb0 = Vector3.Dot(D, triangleB[0]);
+            pb1 = Vector3.Dot(D, triangleB[2]);
+            pb2 = Vector3.Dot(D, triangleB[1]);
+            dv0 = db0;
+            dv1 = db2;
+            dv2 = db1;
+        }
+        tb1 = pb0 + (pb1 - pb0) * (dv0 / (dv0 - dv1));
+        tb2 = pb1 + (pb2 - pb1) * (dv1 / (dv1 - dv2));
+        if(System.Math.Min(tb1, tb2)+0.1 > System.Math.Max(ta1, ta2))
+        {
+            return true;
+        }
+        if (System.Math.Min(ta1, ta2)+0.1 > System.Math.Max(tb1, tb2))
+        {
+            return true;
+        }
+
         return false;
     }
 
@@ -185,18 +237,9 @@ public class GeometryFunctions{
                         {
                             triangles[k] = i;
                         }
-                      //if(triIndex > i)
-                      //{
-                      //  triangles[k]--;
-                    //  }
                     }
-                    //Remove vertices[j]
-                    //Now j-- because now vertices[j] is a different number
                 }
             }
-            //Now we can figure out how many vertices we need and construct the new vertex list
-
-
         }
 
         //Now reconstruct vertices
