@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using UnityEngine;
 
@@ -36,70 +37,126 @@ public class GeometryFunctions{
 
         float res1 = pointA[0] * a + pointA[1] * b + pointA[2] * c + d;
         float res2 = pointB[0] * a + pointB[1] * b + pointB[2] * c + d;
-        if (res1 * res2 >= 0)
+        if (res1 * res2 > 0)
         {
+
             return true;
         }
+     //   UnityEngine.Debug.Log("POINTS ON OPPOSITE SIDES");
         return false;
     }
 
     //This function takes THREE POINTS, NOT THREE INDICES
     public static bool trianglesDefinitelyDontIntersect(Vector3[] triangleA, Vector3[] triangleB)
     {
-    //    UnityEngine.Debug.Log("INTERSECT CHECK");
+
         Vector4 planeEquationA = GeometryFunctions.planeEquation(triangleA);
         Vector4 planeEquationB = GeometryFunctions.planeEquation(triangleB);
-
+      //  UnityEngine.Debug.Log("START FUNC ");
         bool a01 = pointsOnSameSide(triangleA[0], triangleA[1], planeEquationB);
         bool a02 = pointsOnSameSide(triangleA[0], triangleA[2], planeEquationB);
-        if (a01 & a02) return true;
-        bool b01 = pointsOnSameSide(triangleB[0], triangleB[1], planeEquationB);
-        bool b02 = pointsOnSameSide(triangleB[0], triangleB[2], planeEquationB);
-        if (b01 & b02) return true;
+       // UnityEngine.Debug.Log("AS: "+a01+" "+a02);
+        if (a01 && a02) {
+            return true; 
+        }
+        bool b01 = pointsOnSameSide(triangleB[0], triangleB[1], planeEquationA);
+        bool b02 = pointsOnSameSide(triangleB[0], triangleB[2], planeEquationA);
+     //   UnityEngine.Debug.Log("BS: " + b01 + " " + b02);
+        if (b01 && b02) { 
+            return true; 
+        }
+     //   UnityEngine.Debug.Log("CHECK FAILED");
         bool a12 = pointsOnSameSide(triangleA[1], triangleA[2], planeEquationB);
         bool b12 = pointsOnSameSide(triangleB[1], triangleB[2], planeEquationB);
 
         Vector3 D = Vector3.Cross(new Vector3(planeEquationA[0], planeEquationA[1], planeEquationA[2]),
             new Vector3(planeEquationB[0], planeEquationB[1], planeEquationB[2]));
 
-        float pa1, pa2;
-        if (a01)            //Its a02 and a12
+        //projection of vector a onto D is
+        //a dot (unit vector b) * (unit vector b)
+        //vector a1
+        //vector a2
+        //     float pa1, pa2;
+        Vector3 va1, va2;
+        if (a01)            //Its a02 and a12 on the same side
         {
-            pa1 = Vector3.Dot(D, triangleA[0] - triangleA[2]);
-            pa2 = Vector3.Dot(D, triangleA[1] - triangleA[2]);
+            UnityEngine.Debug.Log()
+            va1 = triangleA[0] - triangleA[2];
+            va2 = triangleA[2] - triangleA[1];
+//
         }
         else if (a02)            //Its a12 and a01
         {
-            pa1 = Vector3.Dot(D, triangleA[1] - triangleA[2]);
-            pa2 = Vector3.Dot(D, triangleA[0] - triangleA[1]);
 
+            va1 = triangleA[2] - triangleA[1];
+            va2 = triangleA[1] - triangleA[0];
         }
         else            //Its a01 and a02
         {
-            pa1 = Vector3.Dot(D, triangleA[0] - triangleA[1]);
-            pa2 = Vector3.Dot(D, triangleA[0] - triangleA[2]);
+            va1 = triangleA[1] - triangleA[0];
+            va2 = triangleA[0] - triangleA[2];
+
 
         }
 
-        float pb1, pb2;
+        Vector3 vb1, vb2;
         if (b01)            //Its b02 and b12
         {
-            pb1 = Vector3.Dot(D, triangleB[0] - triangleB[2]);
-            pb2 = Vector3.Dot(D, triangleB[1] - triangleB[2]);
+            vb1 = triangleB[0] - triangleB[2];
+            vb2 = triangleB[2] - triangleB[1]; 
         }
         else if (b02)            //Its b12 and b01
         {
-            pb1 = Vector3.Dot(D, triangleB[1] - triangleB[2]);
-            pb2 = Vector3.Dot(D, triangleB[0] - triangleB[1]);
+            
+            vb1 = triangleB[2] - triangleB[1];
+            vb2 = triangleB[1] - triangleB[0];
         }
         else            //Its b01 and b02
         {
-            pb1 = Vector3.Dot(D, triangleB[0] - triangleB[1]);
-            pb2 = Vector3.Dot(D, triangleB[0] - triangleB[2]);
+    
+            vb1 = triangleB[1] - triangleB[0];
+            vb2 = triangleB[0] - triangleB[2];
         }
 
 
-        UnityEngine.Debug.Log("CHECK FAILED: "+pa1+pa2+pb1+pb2);
+        float da0 = planeEquationB[0] * va1[0] + planeEquationB[1] * va1[1] + planeEquationB[2] * va1[2] + planeEquationB[3];
+        float da1 = planeEquationB[0] * va2[0] + planeEquationB[1] * va2[1] + planeEquationB[2] * va2[2] + planeEquationB[3];
+        Vector3 ta1 = va1 + (va2 - va1) * (da0 / (da0 - da1));
+        Vector3 ta2 = va2 + (va1 - va2) * (da0 / (da0 - da1));
+
+
+        float db1 = planeEquationA[0] * vb1[0] + planeEquationA[1] * vb1[1] + planeEquationA[2] * vb1[2] + planeEquationA[3];
+        float db2 = planeEquationA[0] * vb2[0] + planeEquationA[1] * vb2[1] + planeEquationA[2] * vb2[2] + planeEquationA[3];
+        Vector3 tb1 = vb1 + (vb2 - vb1) * (db1 / (db1 - db2));
+        Vector3 tb2 = vb2 + (vb1 - vb2) * (db1 / (db1 - db2));
+
+        if(System.Math.Min(ta1[0], ta2[0]) > System.Math.Max(tb1[0], tb2[0]) ||
+           System.Math.Min(tb1[0], tb2[0]) > System.Math.Max(ta1[0], ta2[0]))
+        {
+            return true;
+        }
+        if (System.Math.Min(ta1[1], ta2[1]) > System.Math.Max(tb1[1], tb2[1]) ||
+   System.Math.Min(tb1[1], tb2[1]) > System.Math.Max(ta1[1], ta2[1]))
+        {
+            return true;
+        }
+        if (System.Math.Min(ta1[2], ta2[2]) > System.Math.Max(tb1[2], tb2[2]) ||
+   System.Math.Min(tb1[2], tb2[2]) > System.Math.Max(ta1[2], ta2[2]))
+        {
+            return true;
+        }
+        UnityEngine.Debug.Log("TA 1 " + ta1);
+        UnityEngine.Debug.Log("TA 2 " + ta2);
+        UnityEngine.Debug.Log("TB 1 " + tb1);
+        UnityEngine.Debug.Log("TB 2 " + tb2);
+        //      UnityEngine.Debug.Log("CHECK FAILED: "+pa1+":"+pa2+","+pb1+":"+pb2);
+        UnityEngine.Debug.Log(D);
+      //  UnityEngine.Debug.Log(Vector3.Dot(D, triangleA[0]) + " " + Vector3.Dot(D, triangleA[1]) + " " + Vector3.Dot(D, triangleA[2]));
+    //    UnityEngine.Debug.Log(Vector3.Dot(D, triangleB[0]) + " " + Vector3.Dot(D, triangleB[1]) + " " + Vector3.Dot(D, triangleB[2]));
+        UnityEngine.Debug.Log("TRIANGLE A "+triangleA[0]+" "+triangleA[1]+" "+triangleA[2]);
+    //    UnityEngine.Debug.Log("PLANE EQUATION A "+planeEquationA[0]+" "+planeEquationA[1]+" "+planeEquationA[2]+" "+planeEquationA[3]);
+        UnityEngine.Debug.Log("TRIANGLE B "+triangleB[0] + " " + triangleB[1] + " " + triangleB[2]);
+    //    UnityEngine.Debug.Log("PLANE EQUATION B "+planeEquationB[0] + " " + planeEquationB[1] + " " + planeEquationB[2] + " " + planeEquationB[3]);
         return false;
     }
 
