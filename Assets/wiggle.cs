@@ -9,7 +9,6 @@ using System.Collections.Specialized;
 using System;
 using System.Security.Cryptography;
 using System.Linq;
-//using System.Runtime.Remoting.Messaging;
 
 public class wiggle : MonoBehaviour {
     public Mesh model;
@@ -29,12 +28,16 @@ public class wiggle : MonoBehaviour {
             Vector2[] nuv = model.uv;//newUV(nv);
             int[] nt = model.triangles;
 
-            //    model.Clear();
-
             model.vertices = nv;
             model.uv = nuv;
             model.triangles = nt;
             MeshUtility.Optimize(model);
+
+
+
+;
+
+
         }
     }
 
@@ -61,7 +64,7 @@ public class wiggle : MonoBehaviour {
     {
         Vector3[] oldVertices = model.vertices;
         int[] triangles = model.triangles;
-
+        
         Vector3[] newVertices = new Vector3[oldVertices.Length];
 
         bool verticesUpdatedSuccessfully = false;
@@ -92,10 +95,9 @@ public class wiggle : MonoBehaviour {
                 }
             }
         } while (!verticesUpdatedSuccessfully);
-
-        //Save the new model to file. Maybe this should be its own function?
-        AssetDatabase.CreateAsset(model, "Assets/"+this.name+".asset");
-        AssetDatabase.SaveAssets();
+        //Save to disk
+        Mesh deepcopy = (Mesh)Instantiate(model);
+        AssetDatabase.CreateAsset(deepcopy, "Assets/" + this.name + ".asset");
 
         return newVertices;
     }
