@@ -32,12 +32,6 @@ public class wiggle : MonoBehaviour {
             model.uv = nuv;
             model.triangles = nt;
             MeshUtility.Optimize(model);
-
-
-
-;
-
-
         }
     }
 
