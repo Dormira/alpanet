@@ -5,12 +5,17 @@ using UnityEngine;
 public class moveRandomly : MonoBehaviour
 {
     private Vector3 targetLocation;
-    public float speed = 1.0f;
+    public float speed = 0.5f;
+    private float startTime;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        startTime = Time.time;
+        Vector3 source_vertex = this.transform.position;
+        targetLocation = new Vector3(UnityEngine.Random.Range(source_vertex[0] - 1f, source_vertex[0] + 1f),
+                                     source_vertex[1],
+                                     UnityEngine.Random.Range(source_vertex[2] - 1f, source_vertex[2] + 1f));
     }
 
     // Update is called once per frame
@@ -19,16 +24,19 @@ public class moveRandomly : MonoBehaviour
         moveToTargetLocation();
     }
 
-//TODO make this time based actually
+    //TODO make this time based actually
     void moveToTargetLocation()
     {
-        if (this.transform.position[0] == targetLocation[0] && this.transform.position[1] == targetLocation[1])
+        float timeDiff = Time.time - startTime;
+        if (timeDiff > 2 || (this.transform.position[0] == targetLocation[0] && this.transform.position[2] == targetLocation[2]))
         {
+            startTime = Time.time;
+            UnityEngine.Debug.Log("GOING FROM "+this.transform.position+" TO "+targetLocation);
             Vector3 source_vertex = this.transform.position;
 
-            targetLocation = new Vector3(UnityEngine.Random.Range(source_vertex[0] - 1f, source_vertex[0] + 1f),
-                                     UnityEngine.Random.Range(source_vertex[1] - 1f, source_vertex[1] + 1f),
-                                     this.transform.position[2]);
+            targetLocation = new Vector3(UnityEngine.Random.Range(source_vertex[0] - 10f, source_vertex[0] + 10f),
+                                     source_vertex[1], 
+                                     UnityEngine.Random.Range(source_vertex[2] - 10f, source_vertex[2] + 10f));
         }
         float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(this.transform.position, targetLocation, step);
