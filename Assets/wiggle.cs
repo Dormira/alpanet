@@ -74,11 +74,9 @@ public class wiggle : MonoBehaviour {
             //Check the triangles for collisions
             for (int i = 0; i < triangles.Count(); i += 3)
             {
-            //    int[] triangleA = triangles.Skip(i).Take(3).ToArray();
                 Vector3[] triangleA = triangles.Skip(i).Take(3).Select(x => newVertices[x]).ToArray();
                 for (int j = i + 3; j < triangles.Count(); j += 3)
                 {
-               //     Vector3 triangleB = triangles.Skip(j).Take(3).ToArray();
                     Vector3[] triangleB = triangles.Skip(j).Take(3).Select(x => newVertices[x]).ToArray();
 
                     if (!GeometryFunctions.trianglesDefinitelyDontIntersect(triangleA, triangleB))
