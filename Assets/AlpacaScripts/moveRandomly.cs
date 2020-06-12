@@ -22,16 +22,21 @@ public class moveRandomly : MonoBehaviour
     void Update()
     {
         moveToTargetLocation();
+        Vector3 curpos = this.transform.position;
+        curpos.y = Terrain.activeTerrain.SampleHeight(curpos);
+        if(transform.position[1]+5 < curpos.y)
+        {
+            this.transform.position = curpos;
+        }
+
     }
 
-    //TODO make this time based actually
     void moveToTargetLocation()
     {
         float timeDiff = Time.time - startTime;
         if (timeDiff > 2 || (this.transform.position[0] == targetLocation[0] && this.transform.position[2] == targetLocation[2]))
         {
             startTime = Time.time;
-            UnityEngine.Debug.Log("GOING FROM "+this.transform.position+" TO "+targetLocation);
             Vector3 source_vertex = this.transform.position;
 
             targetLocation = new Vector3(UnityEngine.Random.Range(source_vertex[0] - 10f, source_vertex[0] + 10f),
