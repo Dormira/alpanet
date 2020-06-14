@@ -9,6 +9,8 @@ using System.Collections.Specialized;
 using System;
 using System.Security.Cryptography;
 using System.Linq;
+//For saving to disk
+
 
 public class wiggle : MonoBehaviour {
     public Mesh model;
@@ -31,7 +33,9 @@ public class wiggle : MonoBehaviour {
             model.vertices = nv;
             model.uv = nuv;
             model.triangles = nt;
-            MeshUtility.Optimize(model);
+            model.Optimize();
+            //Maybe the model should be saved after optimize
+            //We have to update the mesh collider too
         }
     }
 
@@ -87,9 +91,8 @@ public class wiggle : MonoBehaviour {
                 }
             }
         } while (!verticesUpdatedSuccessfully);
-        //Save to disk
-        Mesh deepcopy = (Mesh)Instantiate(model);
-        AssetDatabase.CreateAsset(deepcopy, "Assets/" + this.name + ".asset");
+
+        meshSerializer.serializeMesh(model, this.name);
 
         return newVertices;
     }

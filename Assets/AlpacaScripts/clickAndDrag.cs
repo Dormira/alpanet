@@ -8,12 +8,13 @@ using UnityEngine;
 //That might be more expensive, computationally, so probably I just want to give gameobjects a location floor of 0
 public class clickAndDrag : MonoBehaviour
 {
+    public bool isDragging;
     Vector3 screenPoint;
     Vector3 offset;
     // Start is called before the first frame update
     void Start()
     {
-        
+        isDragging = false;
     }
 
     // Update is called once per frame
@@ -25,11 +26,13 @@ public class clickAndDrag : MonoBehaviour
     void OnMouseUp()
     {
         this.GetComponent<Rigidbody>().useGravity = true;
+        isDragging = false;
     }
 
     void OnMouseDown()
     {
         this.GetComponent<Rigidbody>().useGravity = false;
+        isDragging = true;
         screenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);//The original place that I clicked in screen points
       //  offset = this.transform.position - Camera.main.ScreenToWorldPoint(screenPoint);//The difference between the object and where I clicked in world points
     }
@@ -46,9 +49,14 @@ public class clickAndDrag : MonoBehaviour
         Vector3 newObjWorldLocation = Camera.main.ScreenToWorldPoint(translatedObjScreenLocation);
 
         this.transform.position = newObjWorldLocation;
+
+        Vector3 curpos = this.transform.position;
+        curpos.y = Terrain.activeTerrain.SampleHeight(curpos);
+        if (transform.position[1] < curpos.y)
+        {
+            this.transform.position = curpos;
+        }
+
         screenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
-
-
-
     }
 }

@@ -1,30 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Versioning;
+using System.IO;
 using UnityEngine;
 using UnityEditor;
 
 public class placeFenceButton : MonoBehaviour
 {
-    public Texture kith;
-    public Texture ache;
+    public Texture2D kith;
+    public Texture2D ache;
     public Texture buttonIcon;
     // Start is called before the first frame update
     bool fenceMode;
+
     void Start()
     {
-        fenceMode = false;
+        fenceMode = true;
         //now kith icon + button
-        kith = (Texture)AssetDatabase.LoadAssetAtPath("Assets/nowkith.png", typeof(Object));
-        ache = (Texture)AssetDatabase.LoadAssetAtPath("Assets/achewood07.jpg", typeof(Object));
+        kith = new Texture2D(2,2);
+        kith.LoadImage(File.ReadAllBytes(Path.Combine(Application.dataPath,"Materials/nowkith.png")));
+        ache = new Texture2D(2, 2);
+        ache.LoadImage(File.ReadAllBytes(Path.Combine(Application.dataPath, "Materials/achewood07.jpg")));
 
         buttonIcon = kith;
     }
 
     void OnGUI()
     {
-   //     UnityEngine.Debug.Log(kith.dimension);   
-        if (GUI.Button(new Rect(0, 0, kith.width/10, kith.height/10), buttonIcon))
+        if (GUI.Button(new Rect(0, 0, 25, 25), buttonIcon))
         {
             fenceMode = !fenceMode;
             if (fenceMode)
@@ -36,7 +39,6 @@ public class placeFenceButton : MonoBehaviour
                 buttonIcon = ache;
             }
         }
-
     }
 
     void OnMouseUpAsButton()
