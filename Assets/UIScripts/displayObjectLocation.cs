@@ -22,6 +22,6 @@ public class displayObjectLocation : MonoBehaviour
     void OnGUI()
     {
         GUI.Label(new Rect(Screen.width-400, 0, 400, 25), targetLocText);
-        GUI.Label(new Rect(Screen.width - 400, 25, 400, 25), Application.dataPath);
+        GUI.Label(new Rect(Screen.width - 400, 25, 400, 50), "LOCATION: "+Application.dataPath);
     }
 }

@@ -31,6 +31,7 @@ public class clickAndDrag : MonoBehaviour
 
     void OnMouseDown()
     {
+     //   UnityEngine.Debug.Log("CLICKED DOWN ON ", this.name);
         this.GetComponent<Rigidbody>().useGravity = false;
         isDragging = true;
         screenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);//The original place that I clicked in screen points

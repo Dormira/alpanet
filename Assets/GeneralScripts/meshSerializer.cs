@@ -63,15 +63,25 @@ public class meshSerializer
 
     public static Mesh deserializeMesh(string name)
     {
+        Mesh mesh;
         string path = Path.Combine(Application.persistentDataPath, name + ".mesh");
-        FileStream stream = new FileStream(path, FileMode.Open);
-        serializableMesh smesh = (serializableMesh)formatter.Deserialize(stream);
-        stream.Close();
+        if(File.Exists(path)){
+            FileStream stream = new FileStream(path, FileMode.Open);
+            serializableMesh smesh = (serializableMesh)formatter.Deserialize(stream);
+            stream.Close();
 
-        Mesh mesh = new Mesh();
-        mesh.vertices = smesh.vertices.Select(x => serializableVector3ToVector3(x)).ToArray();
-        mesh.triangles = smesh.triangles;
-        mesh.colors = smesh.colors.Select(x => serializableVector4ToColor(x)).ToArray();
+            mesh = new Mesh();
+            mesh.vertices = smesh.vertices.Select(x => serializableVector3ToVector3(x)).ToArray();
+            mesh.triangles = smesh.triangles;
+            mesh.colors = smesh.colors.Select(x => serializableVector4ToColor(x)).ToArray();
+        }
+        else
+        {
+            GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            MeshFilter mf = (MeshFilter)cube.GetComponent("MeshFilter");
+            mesh = mf.mesh;
+        }
+
         return mesh;
     }
 }

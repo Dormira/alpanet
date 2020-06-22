@@ -18,9 +18,9 @@ public class placeFenceButton : MonoBehaviour
         fenceMode = true;
         //now kith icon + button
         kith = new Texture2D(2,2);
-        kith.LoadImage(File.ReadAllBytes(Path.Combine(Application.dataPath,"Materials/nowkith.png")));
+        kith.LoadImage(File.ReadAllBytes(Path.Combine(Application.dataPath,"Images/nowkith.png")));
         ache = new Texture2D(2, 2);
-        ache.LoadImage(File.ReadAllBytes(Path.Combine(Application.dataPath, "Materials/achewood07.jpg")));
+        ache.LoadImage(File.ReadAllBytes(Path.Combine(Application.dataPath, "Images/achewood07.jpg")));
 
         buttonIcon = kith;
     }
