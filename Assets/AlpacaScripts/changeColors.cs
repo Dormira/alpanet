@@ -7,10 +7,20 @@ public class changeColors : MonoBehaviour
     Color colorStart = Color.red;
     Color colorEnd = Color.green;
     Renderer rend;
+    Mesh mesh;
     // Start is called before the first frame update
     void Start()
     {
-        Mesh mesh = GetComponent<MeshFilter>().mesh;
+        MeshFilter mf = GetComponent<MeshFilter>();
+        if (mf)
+        {
+            mesh = mf.mesh;
+        }
+        else
+        {
+            mesh = GetComponent<SkinnedMeshRenderer>().sharedMesh;
+        }
+
         Vector3[] vertices = mesh.vertices;
         Color[] colors = new Color[vertices.Length];
 
@@ -18,6 +28,8 @@ public class changeColors : MonoBehaviour
             colors[i] = Color.Lerp(colorStart, colorEnd, vertices[i].y);
 
         mesh.colors = colors;
+
+        
     }
 
     // Update is called once per frame
