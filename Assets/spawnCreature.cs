@@ -6,32 +6,17 @@ using UnityEngine;
 
 public class spawnCreature : MonoBehaviour
 {
-    public GameObject Cube;
-// UnityEvent spawnCreatureEvent = new UnityEvent();
-    // Start is called before the first frame update
+    public GameObject creature;
+
     void Start()
     {
-        Cube = GameObject.Find("Cube");
-
-    //    GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
-     //   foreach (GameObject go in allObjects)
-     //   {
-          //  UnityEngine.Debug.Log(go);
+        creature = GameObject.Find("AlpacaPrime");
         spawn();
-      //  }
-        //  spawnCreatureEvent.addListener();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-
     }
 
     void spawn()
     {
-        Instantiate(Cube);
+        Instantiate(creature);
     }
 
 }

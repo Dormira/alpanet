@@ -13,12 +13,18 @@ using System.Linq;
 
 
 public class wiggle : MonoBehaviour {
-    public Mesh model;
+    public Mesh mesh;
 
     void Start() {
-        MeshFilter viewedModelFilter = (MeshFilter)this.GetComponent("MeshFilter");
-        model = viewedModelFilter.mesh;
-        GeometryFunctions.weldVertices(model);
+        if (GetComponent<MeshFilter>())
+        {
+            mesh = GetComponent<MeshFilter>().sharedMesh;
+        }
+        else if (GetComponent<SkinnedMeshRenderer>())
+        {
+            mesh = GetComponent<SkinnedMeshRenderer>().sharedMesh;
+        }
+        GeometryFunctions.weldVertices(mesh);
     }
 
     // Update is called once per frame
@@ -27,13 +33,13 @@ public class wiggle : MonoBehaviour {
         {
             //Change the model vertices
             Vector3[] nv = newVertices();
-            Vector2[] nuv = model.uv;//newUV(nv);
-            int[] nt = model.triangles;
+            Vector2[] nuv = mesh.uv;//newUV(nv);
+            int[] nt = mesh.triangles;
 
-            model.vertices = nv;
-            model.uv = nuv;
-            model.triangles = nt;
-            model.Optimize();
+            mesh.vertices = nv;
+            mesh.uv = nuv;
+            mesh.triangles = nt;
+            mesh.Optimize();
             //Maybe the model should be saved after optimize
             //We have to update the mesh collider too
         }
@@ -60,8 +66,8 @@ public class wiggle : MonoBehaviour {
 
     Vector3[] newVertices()
     {
-        Vector3[] oldVertices = model.vertices;
-        int[] triangles = model.triangles;
+        Vector3[] oldVertices = mesh.vertices;
+        int[] triangles = mesh.triangles;
         
         Vector3[] newVertices = new Vector3[oldVertices.Length];
 
@@ -92,7 +98,7 @@ public class wiggle : MonoBehaviour {
             }
         } while (!verticesUpdatedSuccessfully);
 
-        meshSerializer.serializeMesh(model, this.name);
+        meshSerializer.serializeMesh(mesh, this.name);
 
         return newVertices;
     }

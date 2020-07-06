@@ -1,38 +1,63 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class FollowGameObject : MonoBehaviour
 {
-    private Vector3 velocity = Vector3.zero;
-    public float smoothTime = 10000f;
-
-    
+    private Vector3 velocity = new Vector3(0f, 0f, 0f);
+    Vector3 birdseyePos;
+    Vector3 lookpoint;
+ 
     GameObject target;
-    clickAndDrag refScript;
+    AlpacaVariables alpvar;
     // Start is called before the first frame update
     void Start()
     {
         //TODO: disentangle this from specific object
-        target = GameObject.Find("Alpaca1");
-        refScript = target.GetComponent<clickAndDrag>();
+        target = GameObject.Find("AlpacaPrime").transform.GetChild(1).gameObject;
+        alpvar = GameObject.Find("AlpacaPrime").GetComponent<AlpacaVariables>();
     } 
 
     // Update is called once per frame
     void Update()
     {
-        if (!refScript.isDragging)
+        if (!alpvar.isClickingAndDragging)
         {
             float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
-            if (distanceToTarget > 5f)
+ 
+            if (distanceToTarget > 20f)
             {
-                transform.position = Vector3.SmoothDamp(transform.position, target.transform.position, ref velocity, smoothTime);
+                //Smoothdamp doesn't like being passed time as a variable, not sure why
+                transform.position = Vector3.SmoothDamp(this.transform.position,
+                    target.transform.position, ref velocity, 0.3f);
             }
             transform.LookAt(target.transform);
+            birdseyePos = Vector3.zero;
+        }
+        else//If we are clicking and dragging I want the camera to exist 20m directly above the alpaca and stay there
+        {
+            if(birdseyePos == Vector3.zero)
+            {
+                birdseyePos = target.transform.position;
+                lookpoint = birdseyePos;
+                birdseyePos.y = birdseyePos.y + 40;
+            }
+            if(Vector3.Distance(this.transform.position,birdseyePos) > 0.5f)
+            {
+                transform.position = Vector3.SmoothDamp(this.transform.position,
+        birdseyePos, ref velocity, 0.5f);
+                transform.LookAt(lookpoint);
+            }
+
+
+
+
         }
         
-
+        
         
 
     }

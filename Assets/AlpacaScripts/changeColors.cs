@@ -2,24 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class changeColors : MonoBehaviour
 {
-    Color colorStart = Color.red;
-    Color colorEnd = Color.green;
     Renderer rend;
     Mesh mesh;
     // Start is called before the first frame update
     void Start()
     {
-        MeshFilter mf = GetComponent<MeshFilter>();
-        if (mf)
+        if (GetComponent<MeshFilter>())
         {
-            mesh = mf.mesh;
+            mesh = GetComponent<MeshFilter>().sharedMesh;
         }
-        else
+        else if(GetComponent<SkinnedMeshRenderer>())
         {
             mesh = GetComponent<SkinnedMeshRenderer>().sharedMesh;
         }
+        Color colorStart = new Color(UnityEngine.Random.Range(0f, 1f),
+            UnityEngine.Random.Range(0f, 1f),
+            UnityEngine.Random.Range(0f, 1f),
+            1f);
+        Color colorEnd = new Color(UnityEngine.Random.Range(0f, 1f),
+            UnityEngine.Random.Range(0f, 1f),
+            UnityEngine.Random.Range(0f, 1f),
+           1f);
 
         Vector3[] vertices = mesh.vertices;
         Color[] colors = new Color[vertices.Length];

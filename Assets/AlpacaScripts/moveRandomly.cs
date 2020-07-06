@@ -16,12 +16,12 @@ public class moveRandomly : MonoBehaviour
     void Update()
     {
         
-        if(Time.time - startTime > 3)
+        if(Time.time - startTime > 5)
         {
             startTime = Time.time;
-            rb.velocity = new Vector3(UnityEngine.Random.Range(-20f, 20f),
-                            UnityEngine.Random.Range(0, 5f),
-                            UnityEngine.Random.Range(-20f, 20f));
+            rb.velocity = new Vector3(UnityEngine.Random.Range(-75f, 75f),
+                            UnityEngine.Random.Range(0, 75f),
+                            UnityEngine.Random.Range(-75f, 75f));
         }
 
     }

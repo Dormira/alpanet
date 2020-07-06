@@ -214,11 +214,10 @@ public class GeometryFunctions{
 
     //Right now this function assumes that our vertex array is of the form [unique vertices][non-unique vertices]
     //That's not necesarily the case
-    public static (Vector3[], int[]) weldVertices(Mesh model)
+    public static (Vector3[], int[]) weldVertices(Mesh mesh)
     {
-
-        Vector3[] vertices = model.vertices;
-        int[] triangles = model.triangles;
+        Vector3[] vertices = mesh.vertices;
+        int[] triangles = mesh.triangles;
 
         //Triangles modification loop
         for (int i = 0; i < vertices.Length; i++)
@@ -246,18 +245,22 @@ public class GeometryFunctions{
         //For every vertex in vertices
         //If its index doesn't exist in triIndex
         Vector3[] newVertices = new Vector3[triangles.Distinct().Count()];
+      //  int nvi = 0;
         foreach (int vertexIndex in triangles.Distinct())
         {
-            newVertices[vertexIndex] = model.vertices[vertexIndex];
+        //    UnityEngine.Debug.Log(vertexIndex + "/" + triangles.Distinct());
+            UnityEngine.Debug.Log(vertexIndex+"/"+newVertices.Length);
+            UnityEngine.Debug.Log(vertexIndex + "/" + mesh.vertices.Length);
+            newVertices[vertexIndex] = mesh.vertices[vertexIndex];
         }
 
         //For every pair of equivalent vertices A and B in model's vertex list
         //Update all references to B in the model's triangle's list to be references to A
         //Delete vertex B
 
-        model.triangles = triangles;
-        model.vertices = newVertices;
-        return (model.vertices, model.triangles);//Dummy line
+        mesh.triangles = triangles;
+        mesh.vertices = newVertices;
+        return (mesh.vertices, mesh.triangles);//Dummy line
     }
 
 

@@ -9,13 +9,13 @@ public class displayObjectLocation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        target = GameObject.Find("Alpaca1");
+        target = GameObject.Find("AlpacaPrime");
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 pos = target.transform.position;
+        Vector3 pos = target.transform.position;                                                                                                                                         
         targetLocText = pos[0].ToString()+", "+pos[1].ToString() + ", "+pos[2];
 
     }
