@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Security.Cryptography;
+using System;
 using UnityEngine;
 //TODO: When you drag an object too fast it can clip through the ground
 //Using moveto rather than magically teleporting the cube should do it
@@ -19,9 +20,7 @@ public class clickAndDrag : MonoBehaviour
 
     void Start()
     {
-        //  Cursor.visible = true;
         rootvars = transform.root.GetComponent<AlpacaVariables>();
-       // UnityEngine.Debug.Log(rootvars);
     }
 
     void OnMouseUp()
@@ -32,17 +31,17 @@ public class clickAndDrag : MonoBehaviour
 
     void OnMouseDown()
     {
+        UnityEngine.Debug.Log(transform.root);
         rootvars.isClickingAndDragging = true;
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
         
         GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
 
-        //This should probably get saved in world points and then converted back to screen points
         oldMousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);//The original place that I clicked in screen points
-
     }
 
+    /*
     void OnMouseDrag()
     {
         Vector3 newMousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);//The current place that my mouse is in screen points
@@ -52,12 +51,24 @@ public class clickAndDrag : MonoBehaviour
         transform.position = Camera.main.ScreenToWorldPoint(translatedObjScreenLocation);
         //This code makes us not go below the ground
         Vector3 curpos = transform.position;
-        curpos.y = Terrain.activeTerrain.SampleHeight(curpos);
+        curpos.y = Terrain.activeTerrain.SampleHeight(curpos)+5;
         if (transform.position.y < curpos.y)
         {
             transform.position = curpos;
         }
 
         oldMousePosition = newMousePosition;
+    }
+    */
+    void OnMouseDrag()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);//The ray of my mouse cursor
+                                                                    //       Vector3 a = new Vector3(transform.position.x, )
+        float groundDistance;
+        RaycastHit hit;
+        Physics.Raycast(ray, out hit, 9999, 1 << LayerMask.NameToLayer("Terrain"));
+        //  Vector3 newPoint = ray.GetPoint(Math.Min(40, hit.distance));
+        Vector3 newPoint = ray.GetPoint(hit.distance-5);
+        transform.position = newPoint;
     }
 }

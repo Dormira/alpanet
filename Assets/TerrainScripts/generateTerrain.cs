@@ -8,23 +8,16 @@ public class generateTerrain : MonoBehaviour
 {
     //This is on a terrain object
     //Which contains terrain data
-    Terrain self;
+    Terrain oldTerrain;
     TerrainData thisTerrainData;
 
     void Start()
     {
+        oldTerrain = this.GetComponent<Terrain>();
         System.Random random = new System.Random();
-        int terrainResolution = this.GetComponent<Terrain>().terrainData.heightmapResolution;
+        int terrainResolution = oldTerrain.terrainData.heightmapResolution;
         float[,] newHeightmap = new float[terrainResolution, terrainResolution];
 
-        //flat world
-        for (int i = 0; i < terrainResolution; i++)
-        {
-            for (int j = 0; j < terrainResolution; j++)
-            {
-                newHeightmap[i, j] = 0f;
-            }
-        }
 
         int maxWidth = terrainResolution / 4;
         for (int i = 0; i < 10; i++)
@@ -57,8 +50,8 @@ public class generateTerrain : MonoBehaviour
 
         int numTextures = 2;
         //Now do alphamap stuff at it
-        float[,,] alphamap = new float[this.GetComponent<Terrain>().terrainData.alphamapWidth,
-                                       this.GetComponent<Terrain>().terrainData.alphamapHeight, numTextures];
+        float[,,] alphamap = new float[oldTerrain.terrainData.alphamapWidth,
+                                       oldTerrain.terrainData.alphamapHeight, numTextures];
 
         for (int i = 0; i < terrainResolution - 1; i++)
         {
@@ -70,10 +63,39 @@ public class generateTerrain : MonoBehaviour
         }
 
         //Set the alpha maps
-               this.GetComponent<Terrain>().terrainData.SetAlphamaps(0, 0, alphamap);
+        oldTerrain.terrainData.SetAlphamaps(0, 0, alphamap);
         //Set the heights
-               this.GetComponent<Terrain>().terrainData.SetHeights(0, 0, newHeightmap);
-               this.GetComponent<Terrain>().terrainData.SyncHeightmap();
+        oldTerrain.terrainData.SetHeights(0, 0, newHeightmap);
+        oldTerrain.terrainData.SyncHeightmap();
+
+        //Generate grass texture -- THIS MUST HAPPEN AFTER HEIGHTS ARE SET IN ORDER TO CALCULATE STEEPNESS
+        int[,] grassLayer = oldTerrain.terrainData.GetDetailLayer(0, 0, oldTerrain.terrainData.detailHeight, oldTerrain.terrainData.detailWidth, 0);
+        for (int i = 0; i < oldTerrain.terrainData.detailHeight; i++)
+        {
+            for (int j = 0; j < oldTerrain.terrainData.detailWidth; j++)
+            {
+                float normi = (float)((i/2) * 1.0 / (oldTerrain.terrainData.alphamapHeight - 1));
+                float normj = (float)((j/2) * 1.0 / (oldTerrain.terrainData.alphamapWidth - 1));
+                
+                float steepness = Math.Abs(oldTerrain.terrainData.GetSteepness(normi, normj));
+
+                if (steepness > 70)
+                {
+                    grassLayer[j,i] = 0;
+                }
+                else
+                { 
+                    grassLayer[j,i] = (int)(7-(steepness/10));
+                }
+
+            }
+        }
+        oldTerrain.terrainData.SetDetailLayer(0, 0, 0, grassLayer);
+
+    }
+
+    void generateGrass()
+    {
 
     }
 

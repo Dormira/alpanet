@@ -16,10 +16,19 @@ public class FollowGameObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject firstAlpaca = GameObject.FindGameObjectsWithTag("Alpaca")[0];
+        setTarget(firstAlpaca);
         //TODO: disentangle this from specific object
-        target = GameObject.Find("AlpacaPrime").transform.GetChild(1).gameObject;
-        alpvar = GameObject.Find("AlpacaPrime").GetComponent<AlpacaVariables>();
+        //target = GameObject.Find("AlpacaPrime").transform.GetChild(1).gameObject;
+    //    target = firstAlpaca.transform.GetChild(1).gameObject;
+    //    alpvar = firstAlpaca.GetComponent<AlpacaVariables>();
     } 
+
+    public void setTarget(GameObject alpaca)
+    {
+        target = alpaca.transform.GetChild(1).gameObject;
+        alpvar = alpaca.GetComponent<AlpacaVariables>();
+    }
 
     // Update is called once per frame
     void Update()
