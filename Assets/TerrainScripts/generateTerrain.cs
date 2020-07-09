@@ -69,34 +69,34 @@ public class generateTerrain : MonoBehaviour
         oldTerrain.terrainData.SyncHeightmap();
 
         //Generate grass texture -- THIS MUST HAPPEN AFTER HEIGHTS ARE SET IN ORDER TO CALCULATE STEEPNESS
+        
         int[,] grassLayer = oldTerrain.terrainData.GetDetailLayer(0, 0, oldTerrain.terrainData.detailHeight, oldTerrain.terrainData.detailWidth, 0);
-        for (int i = 0; i < oldTerrain.terrainData.detailHeight; i++)
-        {
-            for (int j = 0; j < oldTerrain.terrainData.detailWidth; j++)
-            {
-                float normi = (float)((i/2) * 1.0 / (oldTerrain.terrainData.alphamapHeight - 1));
-                float normj = (float)((j/2) * 1.0 / (oldTerrain.terrainData.alphamapWidth - 1));
-                
-                float steepness = Math.Abs(oldTerrain.terrainData.GetSteepness(normi, normj));
+        oldTerrain.terrainData.SetDetailLayer(0, 0, 0, generateGrass(grassLayer, oldTerrain.terrainData));
+    }
 
-                if (steepness > 70)
+    int[,] generateGrass(int[,] grassLayerToGenerate, TerrainData terrainData)
+    {
+        for (int i = 0; i < terrainData.detailHeight; i++)
+        {
+            for (int j = 0; j < terrainData.detailWidth; j++)
+            {
+                float normi = (float)((i / 2) * 1.0 / (terrainData.alphamapHeight - 1));
+                float normj = (float)((j / 2) * 1.0 / (terrainData.alphamapWidth - 1));
+
+                float steepness = Math.Abs(terrainData.GetSteepness(normi, normj));
+
+                if (steepness > 50)
                 {
-                    grassLayer[j,i] = 0;
+                    grassLayerToGenerate[j, i] = 0;
                 }
                 else
-                { 
-                    grassLayer[j,i] = (int)(7-(steepness/10));
+                {
+                    grassLayerToGenerate[j, i] = (int)(10 - (steepness / 5));
                 }
 
             }
         }
-        oldTerrain.terrainData.SetDetailLayer(0, 0, 0, grassLayer);
-
-    }
-
-    void generateGrass()
-    {
-
+        return grassLayerToGenerate;
     }
 
     float[,] boxblur(float[,] array)
