@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
 
 public class generateTerrain : MonoBehaviour
@@ -14,8 +11,44 @@ public class generateTerrain : MonoBehaviour
     void Start()
     {
         oldTerrain = this.GetComponent<Terrain>();
-        System.Random random = new System.Random();
         int terrainResolution = oldTerrain.terrainData.heightmapResolution;
+
+
+        float[,] newHeightmap = generateHeightmap(terrainResolution);
+        oldTerrain.terrainData.SetHeights(0, 0, newHeightmap);
+        oldTerrain.terrainData.SyncHeightmap();
+
+        oldTerrain.terrainData.SetHeights(0, 0, newHeightmap);
+        oldTerrain.terrainData.SyncHeightmap();
+
+
+        //TEXTURES
+        int numTextures = 2;
+        //Now do alphamap stuff at it
+        float[,,] alphamap = new float[oldTerrain.terrainData.alphamapWidth,
+                                       oldTerrain.terrainData.alphamapHeight, numTextures];
+
+        for (int i = 0; i < terrainResolution - 1; i++)
+        {
+            for (int j = 0; j < terrainResolution - 1; j++)
+            {
+                alphamap[i, j, 0] = newHeightmap[i, j];
+                alphamap[i, j, 1] = 1-newHeightmap[i, j];
+            }
+        }
+        //Set the alpha maps
+        oldTerrain.terrainData.SetAlphamaps(0, 0, alphamap);
+
+
+        //Generate grass texture -- THIS MUST HAPPEN AFTER HEIGHTS ARE SET IN ORDER TO CALCULATE STEEPNESS
+        int[,] grassLayer = oldTerrain.terrainData.GetDetailLayer(0, 0, oldTerrain.terrainData.detailHeight, oldTerrain.terrainData.detailWidth, 0);
+        oldTerrain.terrainData.SetDetailLayer(0, 0, 0, generateGrass(grassLayer, oldTerrain.terrainData));
+    }
+
+    float[,] generateHeightmap(int terrainResolution)
+    {
+        System.Random random = new System.Random();
+
         float[,] newHeightmap = new float[terrainResolution, terrainResolution];
 
 
@@ -47,31 +80,10 @@ public class generateTerrain : MonoBehaviour
 
         newHeightmap = boxblur(newHeightmap);
         newHeightmap = boxblur(newHeightmap);
-
-        int numTextures = 2;
-        //Now do alphamap stuff at it
-        float[,,] alphamap = new float[oldTerrain.terrainData.alphamapWidth,
-                                       oldTerrain.terrainData.alphamapHeight, numTextures];
-
-        for (int i = 0; i < terrainResolution - 1; i++)
-        {
-            for (int j = 0; j < terrainResolution - 1; j++)
-            {
-                alphamap[i, j, 0] = newHeightmap[i, j];
-                alphamap[i, j, 1] = 1-newHeightmap[i, j];
-            }
-        }
-
-        //Set the alpha maps
-        oldTerrain.terrainData.SetAlphamaps(0, 0, alphamap);
-        //Set the heights
-        oldTerrain.terrainData.SetHeights(0, 0, newHeightmap);
-        oldTerrain.terrainData.SyncHeightmap();
-
-        //Generate grass texture -- THIS MUST HAPPEN AFTER HEIGHTS ARE SET IN ORDER TO CALCULATE STEEPNESS
+        return newHeightmap;
         
-        int[,] grassLayer = oldTerrain.terrainData.GetDetailLayer(0, 0, oldTerrain.terrainData.detailHeight, oldTerrain.terrainData.detailWidth, 0);
-        oldTerrain.terrainData.SetDetailLayer(0, 0, 0, generateGrass(grassLayer, oldTerrain.terrainData));
+        //Set the heights
+
     }
 
     int[,] generateGrass(int[,] grassLayerToGenerate, TerrainData terrainData)

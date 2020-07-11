@@ -376,7 +376,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886175534}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9909bb766f5b6754dbae46fb3210911a, type: 3}
   m_Name: 
@@ -992,46 +992,6 @@ ScaleConstraint:
   m_Sources:
   - sourceTransform: {fileID: 543450651609214144}
     weight: 1
---- !u!114 &2091010885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132147891009146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boneShape: 1
-  drawBones: 1
-  drawTripods: 0
-  boneSize: 1
-  tripodSize: 1
-  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
-  m_Transforms:
-  - {fileID: 7304922933986794183}
-  - {fileID: 3052110775229028529}
-  - {fileID: 5273548356516479144}
-  - {fileID: 7685812078587503817}
-  - {fileID: 1849093155642914644}
-  - {fileID: 6853707759264131584}
-  - {fileID: 4961639122491508532}
-  - {fileID: 5791756081965675319}
-  - {fileID: 3717228153288417851}
-  - {fileID: 2368827624219768031}
-  - {fileID: 5962353317643143285}
-  - {fileID: 8325194526687205966}
-  - {fileID: 1693658558431794371}
-  - {fileID: 6092876512877923349}
-  - {fileID: 2425024477930148446}
-  - {fileID: 9001866647988352969}
-  - {fileID: 8637885975293290975}
-  - {fileID: 2497511193474825544}
-  - {fileID: 9128765914965056182}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!136 &2091010886
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1765,7 +1725,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450651609214144}
-  - component: {fileID: 2091010885}
   - component: {fileID: 2091010903}
   - component: {fileID: 2091010911}
   - component: {fileID: 2091010914}
