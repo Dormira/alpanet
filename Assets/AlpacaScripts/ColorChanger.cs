@@ -56,7 +56,8 @@ public class ColorChanger : MonoBehaviour
         {
             GetComponent<SkinnedMeshRenderer>().sharedMesh = newmesh;
         }
-
+        //Destroy(newmesh);
+        
         //DestroyImmediate(oldmesh, true);
 
         //Remove old mesh
