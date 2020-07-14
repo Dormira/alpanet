@@ -10,15 +10,15 @@ public class selectAlpacaMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        alpacas = GameObject.FindGameObjectsWithTag("Alpaca");
-  //      refreshAlpacaPortraits();   
+        UnityEngine.Debug.Log(alpacas.Length);
     }
 
     // Update is called once per frame
     void OnGUI()
     {
         alpacas = GameObject.FindGameObjectsWithTag("Alpaca");
-        if (alpacas.Length != portraits.Length)
+
+        if (alpacas.Length != portraits.Length || alpacas == null)
         {
             refreshAlpacaPortraits();
         }
