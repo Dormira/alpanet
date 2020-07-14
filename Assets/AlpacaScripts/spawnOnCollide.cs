@@ -9,9 +9,7 @@ public class spawnOnCollide : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         string collisionName = collision.gameObject.name;
-        if (collisionName.Contains("Alpaca")){
-            UnityEngine.Debug.Log("collided with " + collision.gameObject.name);
-        }
+        UnityEngine.Debug.Log("collided with " + collision.gameObject.transform.root.gameObject.name);
             
     }
 }

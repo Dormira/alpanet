@@ -26,7 +26,7 @@ public class ColorChanger : MonoBehaviour
             oldmesh = GetComponent<SkinnedMeshRenderer>().sharedMesh;
         }
 
-        Mesh newmesh = (Mesh)Instantiate(oldmesh);
+     //   Mesh newmesh = (Mesh)Instantiate(oldmesh);
 
         Color colorStart = new Color(UnityEngine.Random.Range(0f, 1f),
             UnityEngine.Random.Range(0f, 1f),
@@ -44,19 +44,19 @@ public class ColorChanger : MonoBehaviour
             colors[i] = Color.Lerp(colorStart, colorEnd, vertices[i].y);
 
 
-        newmesh.vertices = vertices;
-        newmesh.colors = colors;
+        oldmesh.vertices = vertices;
+        oldmesh.colors = colors;
 
 
         if (GetComponent<MeshFilter>())
         {
-            GetComponent<MeshFilter>().sharedMesh = newmesh;
+           // GetComponent<MeshFilter>().sharedMesh = newmesh;
         }
         else if (GetComponent<SkinnedMeshRenderer>())
         {
-            GetComponent<SkinnedMeshRenderer>().sharedMesh = newmesh;
+          //  GetComponent<SkinnedMeshRenderer>().sharedMesh = newmesh;
         }
-        //Destroy(newmesh);
+       // Destroy(newmesh);
         
         //DestroyImmediate(oldmesh, true);
 
