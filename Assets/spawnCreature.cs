@@ -1,44 +1,52 @@
 ﻿using UnityEngine;
 
-public class spawnCreature : MonoBehaviour
+public class SpawnCreature : MonoBehaviour
 {
-    public Object prefab;
-    int index = 0;
+    public Object alpacaPrefab;
+    int alpacaIndex = 0;
 
     void Start()
     {
-        //This is our ur-alpaca. The blueprint. The template.
-        //There is nothing wrong with this alpaca
-        prefab = Resources.Load<GameObject>("Prefabs/AlpacaPrime");
-        //So spawn two of them
-        spawn();
-        spawn();
+        alpacaPrefab = Resources.Load<GameObject>("Prefabs/AlpacaPrime");
+        spawnAlpaca();
     }
 
-    void spawn()
+    void Update()
     {
-        //Instantiate the object
-        GameObject child;
-        child = Instantiate(prefab) as GameObject;
-
-        GameObject model = child.transform.GetChild(1).gameObject;
-        //The model will either be a static mesh or a rigged mesh
-        Mesh oldmesh;
-        if (model.GetComponent<MeshFilter>())
+        if (Input.GetKeyDown("space"))
         {
-            oldmesh = model.GetComponent<MeshFilter>().sharedMesh;
-            model.GetComponent<MeshFilter>().sharedMesh = (Mesh)Instantiate(oldmesh);
+            spawnAlpaca();
         }
-        else if (model.GetComponent<SkinnedMeshRenderer>())
-        {
-            oldmesh = model.GetComponent<SkinnedMeshRenderer>().sharedMesh;
-            model.GetComponent<SkinnedMeshRenderer>().sharedMesh = (Mesh)Instantiate(oldmesh);
-        }
-
-        child.name = "Alpaca" + index.ToString();
-        index++;
-
-        model.GetComponent<ColorChanger>().changeColors();
     }
 
+    void spawnAlpaca()
+    {
+        //Instantiate the new alpaca
+        GameObject alpacaObject = Instantiate(alpacaPrefab) as GameObject;
+
+        //Give the alpaca a unique name
+        alpacaObject.name = "Alpaca" + alpacaIndex.ToString();
+        alpacaIndex++;
+
+        //Set the camera to follow the new alpaca
+        Camera.main.GetComponent<FollowGameObject>().setTarget(alpacaObject);
+
+        changeColors(alpacaObject);
+    }
+
+    void changeColors(GameObject alpacaObject)
+    {
+        //Generate a random color
+        Color color = new Color(UnityEngine.Random.Range(0f, 1f),
+            UnityEngine.Random.Range(0f, 1f),
+            UnityEngine.Random.Range(0f, 1f),
+            1f);
+
+        //Get the mesh child of the alpaca, then the mesh renderer component of the mesh
+        GameObject alpacaMesh = alpacaObject.transform.Find("AlpacaMesh").gameObject;
+        var alpacaRenderer = alpacaMesh.GetComponent<SkinnedMeshRenderer>();
+
+        //Set the albedo color of the material
+        alpacaRenderer.material.SetColor("_Color", color);
+    }
 }
