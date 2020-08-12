@@ -11,9 +11,10 @@ public class FollowGameObject : MonoBehaviour
     Vector3 birdseyePos;
     Vector3 lookpoint;
  
+
     GameObject target;
     AlpacaVariables alpvar;
-    // Start is called before the first frame update
+
     void Start()
     {
         GameObject firstAlpaca = GameObject.FindGameObjectsWithTag("Alpaca")[0];
@@ -60,14 +61,6 @@ public class FollowGameObject : MonoBehaviour
         birdseyePos, ref velocity, 0.5f);
                 transform.LookAt(lookpoint);
             }
-
-
-
-
         }
-        
-        
-        
-
     }
 }

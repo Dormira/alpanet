@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4059600568507407720}
   - component: {fileID: 8176832126692054678}
   - component: {fileID: 8176832126692054662}
-  - component: {fileID: 8176832126692054766}
   - component: {fileID: 8176832126692054677}
   m_Layer: 0
   m_Name: Head
@@ -65,25 +64,6 @@ CapsuleCollider:
   m_Height: 1.3393039
   m_Direction: 1
   m_Center: {x: 0.048685156, y: 0.39689657, z: 0.000000044449727}
---- !u!1818360610 &8176832126692054766
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 244609885584591271}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 1, y: 1, z: 1}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 8571273690950807808}
-    weight: 1
 --- !u!144 &8176832126692054677
 CharacterJoint:
   m_ObjectHideFlags: 0
@@ -141,7 +121,6 @@ GameObject:
   - component: {fileID: 8176832126692054668}
   - component: {fileID: 8176832126692054671}
   - component: {fileID: 8176832126692054669}
-  - component: {fileID: 8176832126692054683}
   m_Layer: 0
   m_Name: Hips
   m_TagString: Untagged
@@ -240,23 +219,6 @@ CharacterJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!1818360610 &8176832126692054683
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 313679654167148107}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources: []
 --- !u!1 &1474862130512040621
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +228,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4967741160720312459}
-  - component: {fileID: 8176832126568650667}
   - component: {fileID: 8176832126568650668}
   m_Layer: 0
   m_Name: Root
@@ -291,25 +252,6 @@ Transform:
   m_Father: {fileID: 3427909420510840211}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1818360610 &8176832126568650667
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1474862130512040621}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 1, y: 1, z: 1}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 8571273690950807808}
-    weight: 1
 --- !u!114 &8176832126568650668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,7 +273,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 211943164203665294}
-  - component: {fileID: 8176832126456405370}
   m_Layer: 0
   m_Name: MiddleBackLeg.L
   m_TagString: Untagged
@@ -354,23 +295,6 @@ Transform:
   m_Father: {fileID: 2578163176237749685}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1818360610 &8176832126456405370
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1806396309705699512}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 0.99999976, y: 1, z: 1}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources: []
 --- !u!1 &2353093188585777392
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,7 +306,6 @@ GameObject:
   - component: {fileID: 1448397438648452871}
   - component: {fileID: 8176832126692054670}
   - component: {fileID: 8176832126692054663}
-  - component: {fileID: 8176832126692054684}
   - component: {fileID: 8176832126692054680}
   - component: {fileID: 8176832126692054681}
   - component: {fileID: 8176832126692054689}
@@ -440,25 +363,6 @@ CapsuleCollider:
   m_Height: 1.2786591
   m_Direction: 1
   m_Center: {x: 0.00000019385608, y: 0.76713777, z: 0.11688896}
---- !u!1818360610 &8176832126692054684
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2353093188585777392}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 1, y: 1, z: 1}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 8571273690950807808}
-    weight: 1
 --- !u!114 &8176832126692054680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,7 +409,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6567013427333694833}
   - component: {fileID: 8176832126692054691}
-  - component: {fileID: 8176832126692054767}
   - component: {fileID: 8176832126692054692}
   m_Layer: 0
   m_Name: Neck
@@ -545,25 +448,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!1818360610 &8176832126692054767
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2801973988355656097}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 1, y: 1, z: 1}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 8571273690950807808}
-    weight: 1
 --- !u!144 &8176832126692054692
 CharacterJoint:
   m_ObjectHideFlags: 0
@@ -618,7 +502,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1141122941026994038}
-  - component: {fileID: 8176832126691888443}
   m_Layer: 0
   m_Name: Head_end
   m_TagString: Untagged
@@ -640,23 +523,6 @@ Transform:
   m_Father: {fileID: 4059600568507407720}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1818360610 &8176832126691888443
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2981470786876478731}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 1, y: 1, z: 1}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources: []
 --- !u!1 &3717755984164493279
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,7 +535,6 @@ GameObject:
   - component: {fileID: 8176832126692054672}
   - component: {fileID: 8176832126692054673}
   - component: {fileID: 8176832126692054667}
-  - component: {fileID: 8176832126692054686}
   m_Layer: 0
   m_Name: LowerBackLeg.R
   m_TagString: Untagged
@@ -767,25 +632,6 @@ CharacterJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!1818360610 &8176832126692054686
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3717755984164493279}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 0.99999994, y: 1.0000001, z: 1}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 8571273690950807808}
-    weight: 1
 --- !u!1 &3747094271021940220
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,7 +641,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 978687922172668425}
-  - component: {fileID: 8176832127298565500}
   m_Layer: 0
   m_Name: MiddleBackLeg.R
   m_TagString: Untagged
@@ -818,25 +663,6 @@ Transform:
   m_Father: {fileID: 5827266034087645086}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1818360610 &8176832127298565500
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3747094271021940220}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 0.99999994, y: 0.9999999, z: 0.99999994}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 8571273690950807808}
-    weight: 1
 --- !u!1 &3984566690828688139
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,7 +672,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2578163176237749685}
-  - component: {fileID: 8176832126275961420}
   m_Layer: 0
   m_Name: UpperBackLeg.L
   m_TagString: Untagged
@@ -869,23 +694,6 @@ Transform:
   m_Father: {fileID: 5883448594141899039}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1818360610 &8176832126275961420
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3984566690828688139}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 0.99999976, y: 0.99999994, z: 0.9999998}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources: []
 --- !u!1 &4585475802847573873
 GameObject:
   m_ObjectHideFlags: 0
@@ -898,7 +706,6 @@ GameObject:
   - component: {fileID: 8176832126692054675}
   - component: {fileID: 8176832126692054676}
   - component: {fileID: 8176832126692054674}
-  - component: {fileID: 8176832126692054685}
   m_Layer: 0
   m_Name: LowerBackLeg.L
   m_TagString: Untagged
@@ -996,25 +803,6 @@ CharacterJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!1818360610 &8176832126692054685
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4585475802847573873}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 0.99999994, y: 1, z: 0.9999998}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 7419931088400255235}
-    weight: 1
 --- !u!1 &5102348870686309832
 GameObject:
   m_ObjectHideFlags: 0
@@ -1027,7 +815,6 @@ GameObject:
   - component: {fileID: 8176832126866451938}
   - component: {fileID: 8176832126866451939}
   - component: {fileID: 8176832126866451937}
-  - component: {fileID: 8176832126866451940}
   m_Layer: 0
   m_Name: LowerFrontLeg.L
   m_TagString: Untagged
@@ -1125,23 +912,6 @@ CharacterJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!1818360610 &8176832126866451940
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5102348870686309832}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 1.0000001, y: 0.99999994, z: 0.9999997}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources: []
 --- !u!1 &5535640138204765137
 GameObject:
   m_ObjectHideFlags: 0
@@ -1151,7 +921,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3342994299143845824}
-  - component: {fileID: 8176832126861340315}
   m_Layer: 0
   m_Name: LowerFrontLeg.L_end
   m_TagString: Untagged
@@ -1173,23 +942,6 @@ Transform:
   m_Father: {fileID: 7552744464359008916}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1818360610 &8176832126861340315
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5535640138204765137}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 1, y: 1, z: 1}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources: []
 --- !u!1 &6406808293046864730
 GameObject:
   m_ObjectHideFlags: 0
@@ -1199,7 +951,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2004255912461891849}
-  - component: {fileID: 8176832127538381019}
   m_Layer: 0
   m_Name: UpperFrontLeg.L
   m_TagString: Untagged
@@ -1222,25 +973,6 @@ Transform:
   m_Father: {fileID: 1448397438648452871}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1818360610 &8176832127538381019
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6406808293046864730}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 1, y: 1, z: 1}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 8571273690950807808}
-    weight: 1
 --- !u!1 &7080370588215057757
 GameObject:
   m_ObjectHideFlags: 0
@@ -1250,7 +982,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6039608909524230280}
-  - component: {fileID: 8176832126943169386}
   m_Layer: 0
   m_Name: LowerBackLeg.R_end
   m_TagString: Untagged
@@ -1272,25 +1003,6 @@ Transform:
   m_Father: {fileID: 479104461004239903}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1818360610 &8176832126943169386
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7080370588215057757}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 1, y: 1, z: 1}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 8571273690950807808}
-    weight: 1
 --- !u!1 &7324998701237824476
 GameObject:
   m_ObjectHideFlags: 0
@@ -1300,7 +1012,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5827266034087645086}
-  - component: {fileID: 8176832126954845085}
   m_Layer: 0
   m_Name: UpperBackLeg.R
   m_TagString: Untagged
@@ -1323,25 +1034,6 @@ Transform:
   m_Father: {fileID: 5883448594141899039}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1818360610 &8176832126954845085
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7324998701237824476}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 0.99999994, y: 0.99999976, z: 0.99999994}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 8571273690950807808}
-    weight: 1
 --- !u!1 &7570017899535793484
 GameObject:
   m_ObjectHideFlags: 0
@@ -1351,7 +1043,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4823300435484835835}
-  - component: {fileID: 8176832126277736102}
   m_Layer: 0
   m_Name: LowerFrontLeg.R_end
   m_TagString: Untagged
@@ -1373,23 +1064,6 @@ Transform:
   m_Father: {fileID: 2385080444591582967}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1818360610 &8176832126277736102
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7570017899535793484}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 1, y: 1, z: 1}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources: []
 --- !u!1 &8415505343299614310
 GameObject:
   m_ObjectHideFlags: 0
@@ -1399,7 +1073,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3864854844452936436}
-  - component: {fileID: 8176832128270025289}
   m_Layer: 0
   m_Name: UpperFrontLeg.R
   m_TagString: Untagged
@@ -1422,25 +1095,6 @@ Transform:
   m_Father: {fileID: 1448397438648452871}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1818360610 &8176832128270025289
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8415505343299614310}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 1, y: 1, z: 1}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 8571273690950807808}
-    weight: 1
 --- !u!1 &8458530983304566028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1453,7 +1107,6 @@ GameObject:
   - component: {fileID: 8176832128340952306}
   - component: {fileID: 8176832128340952307}
   - component: {fileID: 8176832128340952305}
-  - component: {fileID: 8176832128340952308}
   m_Layer: 0
   m_Name: LowerFrontLeg.R
   m_TagString: Untagged
@@ -1551,25 +1204,6 @@ CharacterJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!1818360610 &8176832128340952308
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8458530983304566028}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 1.0000001, y: 1, z: 1}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 8571273690950807808}
-    weight: 1
 --- !u!1 &8540977815616558311
 GameObject:
   m_ObjectHideFlags: 0
@@ -1610,7 +1244,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2735883547535593941}
-  - component: {fileID: 8176832127558127393}
   m_Layer: 0
   m_Name: LowerBackLeg.L_end
   m_TagString: Untagged
@@ -1632,23 +1265,6 @@ Transform:
   m_Father: {fileID: 7419931088400255235}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1818360610 &8176832127558127393
-ScaleConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8616245089931306110}
-  m_Enabled: 1
-  m_Weight: 1
-  m_ScaleAtRest: {x: 1, y: 1, z: 1}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
-  m_AffectScalingX: 1
-  m_AffectScalingY: 1
-  m_AffectScalingZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources: []
 --- !u!1 &8956352270797282033
 GameObject:
   m_ObjectHideFlags: 0
@@ -1659,7 +1275,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6615408578043196890}
   - component: {fileID: 1973013033189292795}
-  - component: {fileID: 8176832128223472874}
   - component: {fileID: 8176832128223472871}
   m_Layer: 0
   m_Name: Model
@@ -1748,25 +1363,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.16675532, y: 0.2537033, z: 0.06627196}
     m_Extent: {x: 2.0467777, y: 2.152224, z: 1.3718879}
   m_DirtyAABB: 0
---- !u!1818360608 &8176832128223472874
-PositionConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8956352270797282033}
-  m_Enabled: 1
-  m_Weight: 1
-  m_TranslationAtRest: {x: -0.0000026151538, y: 1.3412123, z: -0.83291054}
-  m_TranslationOffset: {x: 0, y: 0, z: 0}
-  m_AffectTranslationX: 1
-  m_AffectTranslationY: 1
-  m_AffectTranslationZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 4059600568507407720}
-    weight: 1
 --- !u!114 &8176832128223472871
 MonoBehaviour:
   m_ObjectHideFlags: 0
