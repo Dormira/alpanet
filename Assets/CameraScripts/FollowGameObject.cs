@@ -11,12 +11,14 @@ public class FollowGameObject : MonoBehaviour
     Vector3 birdseyePos;
     Vector3 lookpoint;
  
-
     GameObject target;
     AlpacaVariables alpvar;
 
     void Start()
     {
+        //Default the camera to the first alpaca in the list
+        //Concept: Maybe have there be a default camera mode where we orbit around the middle of the map?
+        //Concept: An alpaca favoriting system, follow the first favorited alpaca? Requires save system, not yet implemented
         GameObject firstAlpaca = GameObject.FindGameObjectsWithTag("Alpaca")[0];
         setTarget(firstAlpaca);
     } 
@@ -24,6 +26,8 @@ public class FollowGameObject : MonoBehaviour
     public void setTarget(GameObject alpaca)
     {
         target = alpaca.transform.GetChild(1).gameObject;
+
+        UnityEngine.Debug.Log(target.transform.position);
         alpvar = alpaca.GetComponent<AlpacaVariables>();
     }
 
@@ -36,7 +40,7 @@ public class FollowGameObject : MonoBehaviour
  
             if (distanceToTarget > 20f)
             {
-                //Smoothdamp doesn't like being passed time as a variable, not sure why
+                //Smoothdamp doesn't like being passed time as a variable, only as a reference
                 transform.position = Vector3.SmoothDamp(this.transform.position,
                     target.transform.position, ref velocity, 0.3f);
             }
