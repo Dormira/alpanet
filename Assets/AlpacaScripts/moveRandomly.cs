@@ -6,17 +6,15 @@ public class moveRandomly : MonoBehaviour
 {
     private float startTime;
 
-    public Rigidbody rb;
     void Start()
     {
         startTime = Time.time;
-        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
-        
-        if(Time.time - startTime > 5)
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (Time.time - startTime > 5)
         {
             startTime = Time.time;
             rb.velocity = new Vector3(UnityEngine.Random.Range(-75f, 75f),

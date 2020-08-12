@@ -10,16 +10,11 @@ public class Snapshot : MonoBehaviour
     public Texture2D getSnapshot()
     {
         if (snapshot == null) {
-            //StartCoroutine(takeSnapshot());
             takeSnapshot();
         }
 
-        if(snapshot != null)
-        {
-            return snapshot;
-        }
+        return snapshot;
 
-        return null;
     }
 
     public void takeSnapshot()

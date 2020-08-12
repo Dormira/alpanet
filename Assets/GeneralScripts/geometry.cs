@@ -42,7 +42,6 @@ public class GeometryFunctions{
 
             return true;
         }
-     //   UnityEngine.Debug.Log("POINTS ON OPPOSITE SIDES");
         return false;
     }
 
@@ -248,9 +247,6 @@ public class GeometryFunctions{
       //  int nvi = 0;
         foreach (int vertexIndex in triangles.Distinct())
         {
-        //    UnityEngine.Debug.Log(vertexIndex + "/" + triangles.Distinct());
-            UnityEngine.Debug.Log(vertexIndex+"/"+newVertices.Length);
-            UnityEngine.Debug.Log(vertexIndex + "/" + mesh.vertices.Length);
             newVertices[vertexIndex] = mesh.vertices[vertexIndex];
         }
 

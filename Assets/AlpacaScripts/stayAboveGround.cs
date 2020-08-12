@@ -11,7 +11,7 @@ public class stayAboveGround : MonoBehaviour
         curpos.y = Terrain.activeTerrain.SampleHeight(curpos);
         if (transform.position[1] < curpos.y)
         {
-            curpos.y = curpos.y + 5;
+            curpos.y = curpos.y + 10;
             this.transform.position = curpos;
         }
     }

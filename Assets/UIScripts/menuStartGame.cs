@@ -14,7 +14,7 @@ public class menuStartGame : MonoBehaviour
 
     void OnGUI()
     {
-        if (GUI.Button(new Rect((Screen.width/2)-100, (Screen.height/2)-25, 200, 50), "PRESS THIS PUTTON"))
+        if (GUI.Button(new Rect((Screen.width/2)-100, (Screen.height/2)-25, 200, 50), "START GAME"))
         {
             loadGameOperation.allowSceneActivation = true;
         }

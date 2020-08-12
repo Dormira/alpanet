@@ -18,10 +18,6 @@ public class FollowGameObject : MonoBehaviour
     {
         GameObject firstAlpaca = GameObject.FindGameObjectsWithTag("Alpaca")[0];
         setTarget(firstAlpaca);
-        //TODO: disentangle this from specific object
-        //target = GameObject.Find("AlpacaPrime").transform.GetChild(1).gameObject;
-    //    target = firstAlpaca.transform.GetChild(1).gameObject;
-    //    alpvar = firstAlpaca.GetComponent<AlpacaVariables>();
     } 
 
     public void setTarget(GameObject alpaca)
@@ -43,10 +39,14 @@ public class FollowGameObject : MonoBehaviour
                 transform.position = Vector3.SmoothDamp(this.transform.position,
                     target.transform.position, ref velocity, 0.3f);
             }
+            else
+            {
+                velocity = new Vector3(0f, 0f, 0f);//This fixes camera jerki-ness from having leftover velocity
+            }
             transform.LookAt(target.transform);
             birdseyePos = Vector3.zero;
         }
-        else//If we are clicking and dragging I want the camera to exist 20m directly above the alpaca and stay there
+        else//If we are clicking and dragging I want the camera to exist some distance directly above the alpaca and stay there
         {
             if(birdseyePos == Vector3.zero)
             {

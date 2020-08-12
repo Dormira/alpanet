@@ -5,19 +5,14 @@ public class generateTerrain : MonoBehaviour
 {
     //This is on a terrain object
     //Which contains terrain data
-    Terrain oldTerrain;
-    TerrainData thisTerrainData;
 
     void Start()
     {
-        oldTerrain = this.GetComponent<Terrain>();
+        Terrain oldTerrain = this.GetComponent<Terrain>();
         int terrainResolution = oldTerrain.terrainData.heightmapResolution;
 
 
         float[,] newHeightmap = generateHeightmap(terrainResolution);
-        oldTerrain.terrainData.SetHeights(0, 0, newHeightmap);
-        oldTerrain.terrainData.SyncHeightmap();
-
         oldTerrain.terrainData.SetHeights(0, 0, newHeightmap);
         oldTerrain.terrainData.SyncHeightmap();
 
@@ -32,8 +27,11 @@ public class generateTerrain : MonoBehaviour
         {
             for (int j = 0; j < terrainResolution - 1; j++)
             {
-                alphamap[i, j, 0] = newHeightmap[i, j];
-                alphamap[i, j, 1] = 1-newHeightmap[i, j];
+                 alphamap[i, j, 0] = newHeightmap[i, j];
+                 alphamap[i, j, 1] = 1-newHeightmap[i, j];
+                //alphamap[i, j, 0] = 1;
+                //alphamap[i, j, 1] = 1;
+                //alphamap[i, j, 0] = 1;
             }
         }
         //Set the alpha maps
@@ -43,6 +41,26 @@ public class generateTerrain : MonoBehaviour
         //Generate grass texture -- THIS MUST HAPPEN AFTER HEIGHTS ARE SET IN ORDER TO CALCULATE STEEPNESS
         int[,] grassLayer = oldTerrain.terrainData.GetDetailLayer(0, 0, oldTerrain.terrainData.detailHeight, oldTerrain.terrainData.detailWidth, 0);
         oldTerrain.terrainData.SetDetailLayer(0, 0, 0, generateGrass(grassLayer, oldTerrain.terrainData));
+        /*
+        Texture2D tex = oldTerrain.terrainData.GetAlphamapTexture(0);
+        Color[] colors = new Color[tex.width*tex.height];
+        Color green = new Color(0, 1, 0, 1);
+        for(int i = 0; i < tex.width*tex.height; i++)
+        {
+            colors[i] = green;
+        }
+        tex.SetPixels(colors);
+        tex.Apply();
+
+        TerrainLayer[] terrainLayers = oldTerrain.terrainData.terrainLayers;
+        UnityEngine.Debug.Log("***");
+        UnityEngine.Debug.Log(terrainLayers[0].diffuseTexture);
+        UnityEngine.Debug.Log("***");
+        //terrainLayers[0].diffuseTexture = tex;
+        //terrainLayers[1].diffuseTexture = tex;
+        */
+
+
     }
 
     float[,] generateHeightmap(int terrainResolution)

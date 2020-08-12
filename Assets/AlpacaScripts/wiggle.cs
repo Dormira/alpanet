@@ -13,17 +13,9 @@ using System.Linq;
 
 
 public class wiggle : MonoBehaviour {
-    public Mesh mesh;
 
     void Start() {
-        if (GetComponent<MeshFilter>())
-        {
-            mesh = GetComponent<MeshFilter>().sharedMesh;
-        }
-        else if (GetComponent<SkinnedMeshRenderer>())
-        {
-            mesh = GetComponent<SkinnedMeshRenderer>().sharedMesh;
-        }
+        Mesh mesh = getMesh();
         GeometryFunctions.weldVertices(mesh);
     }
 
@@ -31,6 +23,7 @@ public class wiggle : MonoBehaviour {
     void Update() {
         if (Input.GetKeyDown("w"))
         {
+            Mesh mesh = getMesh();
             //Change the model vertices
             Vector3[] nv = newVertices();
             Vector2[] nuv = mesh.uv;//newUV(nv);
@@ -66,6 +59,7 @@ public class wiggle : MonoBehaviour {
 
     Vector3[] newVertices()
     {
+        Mesh mesh = getMesh();
         Vector3[] oldVertices = mesh.vertices;
         int[] triangles = mesh.triangles;
         
@@ -101,6 +95,23 @@ public class wiggle : MonoBehaviour {
         meshSerializer.serializeMesh(mesh, this.name);
 
         return newVertices;
+    }
+
+    Mesh getMesh()
+    {
+        //get child model
+        GameObject model = this.transform.GetChild(1).gameObject;
+
+        if (model.GetComponent<MeshFilter>())
+        {
+            return model.GetComponent<MeshFilter>().sharedMesh;
+        }
+        else if (model.GetComponent<SkinnedMeshRenderer>())
+        {
+            return model.GetComponent<SkinnedMeshRenderer>().sharedMesh;
+        }
+
+        return null;
     }
 
 }

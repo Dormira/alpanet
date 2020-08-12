@@ -16,6 +16,7 @@ public class ColorChanger : MonoBehaviour
     public void changeColors()
     {
         Mesh oldmesh = null;
+
         //Figure out a better way than this thing yikes
         if (GetComponent<MeshFilter>())
         {
@@ -25,8 +26,7 @@ public class ColorChanger : MonoBehaviour
         {
             oldmesh = GetComponent<SkinnedMeshRenderer>().sharedMesh;
         }
-
-     //   Mesh newmesh = (Mesh)Instantiate(oldmesh);
+        int numverts = oldmesh.vertexCount;
 
         Color colorStart = new Color(UnityEngine.Random.Range(0f, 1f),
             UnityEngine.Random.Range(0f, 1f),
@@ -37,29 +37,12 @@ public class ColorChanger : MonoBehaviour
             UnityEngine.Random.Range(0f, 1f),
            1f);
 
-        Vector3[] vertices = oldmesh.vertices;
-        Color[] colors = new Color[vertices.Length];
+        Color[] colors = new Color[numverts];
 
-        for (int i = 0; i < vertices.Length; i++)
-            colors[i] = Color.Lerp(colorStart, colorEnd, vertices[i].y);
+        for (int i = 0; i < numverts; i++)
+            colors[i] = Color.Lerp(colorStart, colorEnd, (float)i/(float)numverts);
 
 
-        oldmesh.vertices = vertices;
         oldmesh.colors = colors;
-
-
-        if (GetComponent<MeshFilter>())
-        {
-           // GetComponent<MeshFilter>().sharedMesh = newmesh;
-        }
-        else if (GetComponent<SkinnedMeshRenderer>())
-        {
-          //  GetComponent<SkinnedMeshRenderer>().sharedMesh = newmesh;
-        }
-       // Destroy(newmesh);
-        
-        //DestroyImmediate(oldmesh, true);
-
-        //Remove old mesh
     }
 }

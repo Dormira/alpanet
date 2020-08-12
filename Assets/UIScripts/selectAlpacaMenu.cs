@@ -5,38 +5,21 @@ using UnityEngine;
 
 public class selectAlpacaMenu : MonoBehaviour
 {
-    public GameObject[] alpacas;
     public Texture[] portraits;
     // Start is called before the first frame update
-    void Start()
-    {
-        UnityEngine.Debug.Log(alpacas.Length);
-    }
 
     // Update is called once per frame
     void OnGUI()
     {
-        alpacas = GameObject.FindGameObjectsWithTag("Alpaca");
-
-        if (alpacas.Length != portraits.Length || alpacas == null)
+        GameObject[] alpacas = GameObject.FindGameObjectsWithTag("Alpaca");
+        if (alpacas.Length != portraits.Length)
         {
             refreshAlpacaPortraits();
         }
         for (int i = 0; i < alpacas.Length; i++)
         {
-            Texture portrait;
-            if(portraits[i] == null)
-            {
-                portrait = new Texture2D(1, 1);
-                refreshAlpacaPortraits();
-            }
-            else
-            {
-                portrait = portraits[i];
-            }
 
-
-            if (GUI.Button(new Rect(50*i, 25, 50, 50), portrait)){
+            if (GUI.Button(new Rect(50*i, 25, 50, 50), portraits[i])){
                 Camera.main.GetComponent<FollowGameObject>().setTarget(alpacas[i]);
             }
         }
@@ -45,7 +28,7 @@ public class selectAlpacaMenu : MonoBehaviour
     
     void refreshAlpacaPortraits()
     {
-        alpacas = GameObject.FindGameObjectsWithTag("Alpaca");
+        GameObject[] alpacas = GameObject.FindGameObjectsWithTag("Alpaca");
         portraits = new Texture[alpacas.Length];
         for(int i = 0; i < alpacas.Length; i++)
         {
