@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 3141536444367095573}
   - component: {fileID: 2835459143836170764}
   m_Layer: 0
-  m_Name: AlpacaPrime 1
+  m_Name: AlpacaPrime
   m_TagString: Alpaca
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1294,8 +1294,8 @@ GameObject:
   - component: {fileID: 3141536444367095609}
   - component: {fileID: 3141536444367095600}
   - component: {fileID: 3141536444367095599}
-  - component: {fileID: 3141536444367095598}
   - component: {fileID: 3141536444367095574}
+  - component: {fileID: 93797944003559794}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Untagged
@@ -1362,18 +1362,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 856c68bdab9f6744c84d53f524861184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3141536444367095598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8810965526797973831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f17b65247577adc4783335736117f0a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3141536444367095574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1384,6 +1372,18 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1802129d2c2aca541b84dd7bfbdf7b6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &93797944003559794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8810965526797973831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f17b65247577adc4783335736117f0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8936152937761626134

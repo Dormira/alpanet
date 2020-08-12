@@ -4,22 +4,25 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class menuStartGame : MonoBehaviour
+public class MenuStartGame : MonoBehaviour
 {
     UnityEngine.AsyncOperation loadGameOperation;
     void Start()
     {
+        //If the main menu is loaded, we should start loading the game behind the scenes to minimize wait times
         StartCoroutine(LoadScene());
     }
 
     void OnGUI()
     {
+        //Start game button, activates pre-loaded scene
         if (GUI.Button(new Rect((Screen.width/2)-100, (Screen.height/2)-25, 200, 50), "START GAME"))
         {
             loadGameOperation.allowSceneActivation = true;
         }
     }
 
+    //This function loads the game scene, but the start button activates it
     IEnumerator LoadScene()
     {
         yield return null;

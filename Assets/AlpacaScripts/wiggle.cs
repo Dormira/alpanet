@@ -1,5 +1,6 @@
-﻿using System.Runtime.InteropServices;
-
+﻿//Visualstudio loves to automatically import libraries, but not prune them
+//TODO: remove the unnecessary ones. they bother me a little
+using System.Runtime.InteropServices;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,6 @@ using System.Collections.Specialized;
 using System;
 using System.Security.Cryptography;
 using System.Linq;
-//For saving to disk
 
 
 public class wiggle : MonoBehaviour {
@@ -83,7 +83,7 @@ public class wiggle : MonoBehaviour {
                 {
                     Vector3[] triangleB = triangles.Skip(j).Take(3).Select(x => newVertices[x]).ToArray();
 
-                    if (!GeometryFunctions.trianglesDefinitelyDontIntersect(triangleA, triangleB))
+                    if (!GeometryFunctions.triangleNonintersectCheck(triangleA, triangleB))
                     {
                         verticesUpdatedSuccessfully = false;
                         break;

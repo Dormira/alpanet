@@ -1,10 +1,4 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
-//using System.Diagnostics;
-//using System.Runtime.InteropServices;
-//using System.Runtime.Versioning;
-using UnityEngine;
-//using UnityEditor;
+﻿using UnityEngine;
 
 public class spawnCreature : MonoBehaviour
 {
@@ -13,7 +7,10 @@ public class spawnCreature : MonoBehaviour
 
     void Start()
     {
-        prefab = Resources.Load<GameObject>("AlpacaPrime");
+        //This is our ur-alpaca. The blueprint. The template.
+        //There is nothing wrong with this alpaca
+        prefab = Resources.Load<GameObject>("Prefabs/AlpacaPrime");
+        //So spawn two of them
         spawn();
         spawn();
     }
@@ -25,8 +22,7 @@ public class spawnCreature : MonoBehaviour
         child = Instantiate(prefab) as GameObject;
 
         GameObject model = child.transform.GetChild(1).gameObject;
-        //Make sure that its mesh is divorced from the prefab otherwise wild shit happens that I hate
-        //Figure out a better way than this thing yikes
+        //The model will either be a static mesh or a rigged mesh
         Mesh oldmesh;
         if (model.GetComponent<MeshFilter>())
         {
