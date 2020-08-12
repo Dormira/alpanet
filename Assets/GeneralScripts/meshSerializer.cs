@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.ComponentModel;
@@ -27,37 +26,45 @@ public class meshSerializer
     /*
      * Conversion functions
      */
+
+    //Take a serializable vector3 and return a normal vector3
     static Vector3 serializableVector3ToVector3(SerializableVector3 svec3)
     {
-        //Take a serializable vector3 and return a normal vector3
         return new Vector3(svec3.x, svec3.y, svec3.z);
     }
+
+    //Take a regular vector3 and return a serializable vector3
     static SerializableVector3 vector3ToSerializableVector3(Vector3 vec3)
     {
-        //Take a regular vector3 and return a serializable vector3
         SerializableVector3 svec3 = new SerializableVector3(vec3[0], vec3[1], vec3[2]);
         return svec3;
     }
+
+    //Take a serializable vector4 and convert it to a standard vector4
     static Vector4 serializableVector4ToVector4(SerializableVector4 svec4)
     {
-        //Take a serializable vector4 and convert it to a standard vector4
+
         return new Vector4(svec4.w, svec4.x, svec4.y, svec4.z);
     }
+
+    //Take a serializable vector4 and convert it into a color object
     static Color serializableVector4ToColor(SerializableVector4 svec4)
     {
-        //Take a serializable vector4 and convert it into a color object
+
         return new Color(svec4.w, svec4.x, svec4.y, svec4.z);
     }
+
+    //Take a vector4 and convert it into its serializable version
     static SerializableVector4 vector4ToSerializableVector4(Vector4 vec4)
     {
-        //Take a vector4 and convert it into its serializable version
+
         SerializableVector4 svec4 = new SerializableVector4(vec4.w, vec4.x, vec4.y, vec4.z);
         return svec4;
     }
 
+    //Take a mesh and a filename and save it to disk
     public static void serializeMesh(Mesh mesh, string name)
     {
-        //Take a mesh and a filename and save it to disk
         serializableMesh smesh = new serializableMesh();
         smesh.vertices = mesh.vertices.Select(x => vector3ToSerializableVector3(x)).ToArray();
         smesh.triangles = mesh.triangles;
@@ -71,12 +78,13 @@ public class meshSerializer
         stream.Close();
     }
 
+    /*
+    * Takes a filename and deserializes the associated mesh
+    * Returns the default cube mesh if there's no mesh saved to disk
+    */
     public static Mesh deserializeMesh(string name)
     {
-        /*
-         * Takes a filename and deserializes the associated mesh
-         * Returns the default cube mesh if there's no mesh saved to disk
-         */
+
         Mesh mesh;
         string path = Path.Combine(Application.persistentDataPath, name + ".mesh");
         if(File.Exists(path)){
@@ -128,7 +136,6 @@ struct SerializableVector3
 struct SerializableVector4
 {
     //This is a serializable version of Unity's vector4 class
-    //Note: I actually don't know if these correspond to RGBA, but as long as they're in the same order when we serialize/deserialize it shouldn't mattter
     public float w { get; set; }
     public float x { get; set; }
     public float y { get; set; }

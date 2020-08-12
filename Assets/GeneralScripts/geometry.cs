@@ -6,23 +6,28 @@ using UnityEngine;
 
 
 public class GeometryFunctions{
-    //Calculates and returns the plane equation of the given triangle
+    /*
+     * Calculates and returns the plane equation of the given triangle
+     */
     public static Vector4 planeEquation(Vector3[] triangle){
-
+    //Get the vertices of the triangle
     Vector3 t0 = triangle[0];
     Vector3 t1 = triangle[1];
     Vector3 t2 = triangle[2];
 
     Vector3 ab = t1 - t0;
     Vector3 ac = t2 - t0;
-
+    //Take the cross product to determine a, b, and c
     Vector3 normal = Vector3.Cross(ab, ac);
+    //Plug a, b, and c into the triangle formula to get d
+    float d = normal.x * t0.x + normal.y * t0.y + normal.z * t0.z;
 
-    float d = normal[0] * t0[0] + normal[1] * t0[1] + normal[2] * t0[2];
+    return new Vector4(normal.x, normal.y, normal.z, d);
+    }
 
-    return new Vector4(normal[0], normal[1], normal[2], d);
-}
-    //Calculates whether or not pointA and pointB are on the same side of plane equation ax+by+cz = d
+    /*
+     * Calculates whether or not pointA and pointB are on the same side of plane equation ax+by+cz = d
+     */
     public static bool pointsOnSameSide(Vector3 pointA, Vector3 pointB, Vector4 planeEquation)
     {
         float a = planeEquation[0];
@@ -30,24 +35,32 @@ public class GeometryFunctions{
         float c = planeEquation[2];
         float d = planeEquation[3];
 
+        //Trivial check for same point
         if (pointA == pointB)
         {
             return true;
         }
-
+        // Otherwise if the signs of the points plugged into the plane equation are the same then they're on the same side
         float res1 = pointA[0] * a + pointA[1] * b + pointA[2] * c + d;
         float res2 = pointB[0] * a + pointB[1] * b + pointB[2] * c + d;
         if (res1 * res2 > 0)
         {
-
             return true;
         }
         return false;
     }
 
-    //This function takes THREE POINTS, NOT THREE INDICES
-    public static bool trianglesDefinitelyDontIntersect(Vector3[] triangleA, Vector3[] triangleB)
+    /*
+     * This is roughly Moller's triangle-triangle intersection algorithm
+     * Small modifications to count cases where triangles share one or two vertices as a non-intersection
+     * since that's a valid way for triangles to be in a model
+     * 
+     * True if the triangles don't intersect
+     * False if they do
+     */
+    public static bool triangleNonintersectCheck(Vector3[] triangleA, Vector3[] triangleB)
     {
+
         Vector3 N2 = Vector3.Cross(triangleB[1] - triangleB[0], triangleB[2] - triangleB[0]);
         N2.Normalize();
         float d2 = Vector3.Dot(N2 * (-1), triangleB[0]);
@@ -78,7 +91,7 @@ public class GeometryFunctions{
         {
             return true;
         }
-        //coplanarity check to go here, unlikely tho can probs just skip it for now
+
         //one point contact checks
         if((da0 == 0 && da1 > 0 && da2 > 0 ) || (da0 == 0 && da1 < 0 && da2 < 0))
         {
@@ -211,8 +224,19 @@ public class GeometryFunctions{
         return false;
     }
 
-    //Right now this function assumes that our vertex array is of the form [unique vertices][non-unique vertices]
-    //That's not necesarily the case
+    /*
+     * weldVertices should return a vertex and triangle list of an optimized version of the given mesh
+     * Welding colocated vertices of our model together leads to cleaner mesh modifications and improves performance somewhat
+     * 
+     * TODO:
+     * Right now this function assumes that our vertex array is of the form [unique vertices][non-unique vertices]
+     * That's not necessarily the case and in fact will cause problems with more complex models
+     * Such as the new and improved, totally non-cubic alpacas :)
+     * 
+     * I also don't think that this file is the appropriate place for a vertex welding function, need to figure out a better place for it
+     * Maybe I should have a separate file just for mesh modification functions
+     */
+
     public static (Vector3[], int[]) weldVertices(Mesh mesh)
     {
         Vector3[] vertices = mesh.vertices;
@@ -244,19 +268,15 @@ public class GeometryFunctions{
         //For every vertex in vertices
         //If its index doesn't exist in triIndex
         Vector3[] newVertices = new Vector3[triangles.Distinct().Count()];
-      //  int nvi = 0;
+
         foreach (int vertexIndex in triangles.Distinct())
         {
             newVertices[vertexIndex] = mesh.vertices[vertexIndex];
         }
 
-        //For every pair of equivalent vertices A and B in model's vertex list
-        //Update all references to B in the model's triangle's list to be references to A
-        //Delete vertex B
-
         mesh.triangles = triangles;
         mesh.vertices = newVertices;
-        return (mesh.vertices, mesh.triangles);//Dummy line
+        return (mesh.vertices, mesh.triangles);
     }
 
 
