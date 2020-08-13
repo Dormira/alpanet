@@ -25,7 +25,8 @@ public class ClickAndDrag : MonoBehaviour
         GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
         //Set the primary camera to follow the target
-        GameObject.Find("MainCamera").GetComponent<FollowGameObject>().setTarget(transform.root.gameObject);
+        int targetIndex = SpawnManager.alpacaIndex.IndexOf(transform.root.name);
+        GameObject.Find("MainCamera").GetComponent<FollowGameObject>().setTarget(targetIndex);
     }
 
     void OnMouseDrag()

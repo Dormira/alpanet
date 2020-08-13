@@ -1,16 +1,18 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class SpawnCreature : MonoBehaviour
+public class SpawnManager : MonoBehaviour
 {
     /*
      * This is really a spawnmanager specific script, 
      * but that may not stay the case so it makes sense to me to keep it with the generic GameObject scripts for now
      */
-    public int alpacaIndex = 0;
+    public int currentIndex = 10;
+    public static List<string> alpacaIndex = new List<string>();//int->string
 
     void Update()
     {
-        if (Input.GetKeyDown("space") & alpacaIndex < 10)
+        if (Input.GetKeyDown("space") & alpacaIndex.Count < 10)
         {
             spawnAlpaca();
         }
@@ -23,11 +25,12 @@ public class SpawnCreature : MonoBehaviour
         GameObject alpacaObject = Instantiate(alpacaPrefab) as GameObject;
 
         //Give the alpaca a unique name
-        alpacaObject.name = "Alpaca" + alpacaIndex.ToString();
-        alpacaIndex++;
+        alpacaIndex.Add(currentIndex.ToString());
+        alpacaObject.name = currentIndex.ToString();
+        currentIndex++;
 
         //Set the camera to follow the new alpaca
-        Camera.main.GetComponent<FollowGameObject>().setTarget(alpacaObject);
+        Camera.main.GetComponent<FollowGameObject>().setTarget(alpacaIndex.Count-1);
 
         changeColors(alpacaObject);
     }

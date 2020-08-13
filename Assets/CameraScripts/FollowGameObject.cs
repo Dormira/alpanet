@@ -13,14 +13,17 @@ public class FollowGameObject : MonoBehaviour
     GameObject targetAlpacaMesh;
     AlpacaVariables alpvar;
 
-    public void setTarget(GameObject alpacaObject)
+    public void setTarget(int alpacaIndex)
     {
+        //This should take an index number to SpawnManager
+        currentAlpacaIndex = alpacaIndex;
+        GameObject target = GameObject.Find(SpawnManager.alpacaIndex[alpacaIndex]);
         // setTarget is not guaranteed to be called by a function that will modify the currentAlpacaIndex,
         // and so currently swapping target alpacas via the GUI or by clicking and dragging or by spawning a new alpaca
         // may cause the first left/right after that event to fail
-        targetAlpacaMesh = alpacaObject.transform.Find("AlpacaMesh").gameObject;
+        targetAlpacaMesh = target.transform.Find("AlpacaMesh").gameObject;
 
-        alpvar = alpacaObject.GetComponent<AlpacaVariables>();
+        alpvar = target.GetComponent<AlpacaVariables>();
     }
 
     void Update()
@@ -47,7 +50,7 @@ public class FollowGameObject : MonoBehaviour
                 currentAlpacaIndex = alpacaObjects.Length - 1;
             }
             UnityEngine.Debug.Log(currentAlpacaIndex);
-            setTarget(alpacaObjects[currentAlpacaIndex]);
+            setTarget(currentAlpacaIndex);
         }
         else if (Input.GetKeyDown("right"))
         {
@@ -59,7 +62,7 @@ public class FollowGameObject : MonoBehaviour
                 currentAlpacaIndex = 0;
             }
             UnityEngine.Debug.Log(currentAlpacaIndex);
-            setTarget(alpacaObjects[currentAlpacaIndex]);
+            setTarget(currentAlpacaIndex);
         }
 
         if (!alpvar.isClickingAndDragging)

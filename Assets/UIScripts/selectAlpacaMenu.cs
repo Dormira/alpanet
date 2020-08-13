@@ -16,7 +16,7 @@ public class SelectAlpacaMenu : MonoBehaviour
         for (int i = 0; i < alpacas.Length; i++)
         {
             if (GUI.Button(new Rect(50*i, 25, 50, 50), portraits[i])){
-                Camera.main.GetComponent<FollowGameObject>().setTarget(alpacas[i]);
+                Camera.main.GetComponent<FollowGameObject>().setTarget(i);
             }
         }
 
