@@ -8,7 +8,7 @@ public class Tutorial : MonoBehaviour
     void Start()
     {
         tutorialStyle = new GUIStyle();
-        tutorialStyle.fontSize = 50;
+        tutorialStyle.fontSize = 40;
         tutorialStyle.alignment = TextAnchor.UpperCenter;
     }
     // Start is called before the first frame update

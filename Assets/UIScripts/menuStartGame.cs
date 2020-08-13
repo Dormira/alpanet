@@ -15,11 +15,18 @@ public class MenuStartGame : MonoBehaviour
 
     void OnGUI()
     {
-        //Start game button, activates pre-loaded scene
-        if (GUI.Button(new Rect((Screen.width/2)-100, (Screen.height/2)-25, 200, 50), "START GAME"))
-        {
-            loadGameOperation.allowSceneActivation = true;
+        if(!(loadGameOperation.progress >= 0.9)){
+            if (GUI.Button(new Rect((Screen.width / 2) - 100, (Screen.height / 2) - 25, 200, 50), "START GAME"))
+            {
+                loadGameOperation.allowSceneActivation = true;
+            }
         }
+        else
+        {
+
+            GUI.Label(new Rect(Screen.width / 2, Screen.height / 2, 200, 50), "LOADING...");
+        }
+        //Start game button, activates pre-loaded scene
     }
 
     //This function loads the game scene, but the start button activates it
