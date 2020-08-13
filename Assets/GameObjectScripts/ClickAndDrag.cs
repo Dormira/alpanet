@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class clickAndDrag : MonoBehaviour
+public class ClickAndDrag : MonoBehaviour
 {
     AlpacaVariables rootvars;
 

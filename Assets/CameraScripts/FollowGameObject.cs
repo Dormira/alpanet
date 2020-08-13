@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class FollowGameObject : MonoBehaviour
 {
-    private Vector3 velocity = new Vector3(0f, 0f, 0f);
+    private Vector3 velocity = new Vector3(0f, 0f, 0f); 
     Vector3 birdseyePos;
     Vector3 lookpoint;
 
@@ -22,8 +22,6 @@ public class FollowGameObject : MonoBehaviour
         //Concept: Maybe have there be a default camera mode where we orbit around the middle of the map?
         //Concept: An alpaca favoriting system, follow the first favorited alpaca? Requires save system, not yet implemented
         alpacaObjects = GameObject.FindGameObjectsWithTag("Alpaca");
-
-        setTarget(alpacaObjects[currentAlpacaIndex]);
     }
 
     public void setTarget(GameObject alpacaObject)

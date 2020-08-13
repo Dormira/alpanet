@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 3141536444140158037}
   - component: {fileID: 3141536444140158036}
   - component: {fileID: 3141536444140158038}
+  - component: {fileID: 1888319908125694880}
   m_Layer: 0
   m_Name: LowerFrontLeg.L
   m_TagString: Untagged
@@ -170,6 +171,18 @@ CharacterJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &1888319908125694880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030601150118882431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 856c68bdab9f6744c84d53f524861184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2786128721309338438
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,7 +193,6 @@ GameObject:
   m_Component:
   - component: {fileID: 85476799493743725}
   - component: {fileID: 4719921225948474188}
-  - component: {fileID: 3141536442812497232}
   - component: {fileID: 6548528248483971344}
   m_Layer: 0
   m_Name: AlpacaMesh
@@ -269,18 +281,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.16675532, y: 0.2537033, z: 0.06627196}
     m_Extent: {x: 2.0467777, y: 2.152224, z: 1.3718879}
   m_DirtyAABB: 0
---- !u!114 &3141536442812497232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2786128721309338438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a05fd8d1c8b45144d9238cf9478a7c72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1818360608 &6548528248483971344
 PositionConstraint:
   m_ObjectHideFlags: 0
@@ -489,6 +489,7 @@ GameObject:
   - component: {fileID: 3141536442661541189}
   - component: {fileID: 3141536442661541188}
   - component: {fileID: 3141536442661541190}
+  - component: {fileID: 471383396402664141}
   m_Layer: 0
   m_Name: LowerFrontLeg.R
   m_TagString: Untagged
@@ -586,6 +587,18 @@ CharacterJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &471383396402664141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3423780949866546363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 856c68bdab9f6744c84d53f524861184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3742228040947035387
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,6 +778,7 @@ GameObject:
   - component: {fileID: 3141536444367095585}
   - component: {fileID: 3141536444367095601}
   - component: {fileID: 3141536444367095586}
+  - component: {fileID: 8235615490924763279}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -862,6 +876,18 @@ CharacterJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &8235615490924763279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6450294698469431312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 856c68bdab9f6744c84d53f524861184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6826157707560282108
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,6 +1010,7 @@ GameObject:
   - component: {fileID: 3141536444367095588}
   - component: {fileID: 3141536444367095587}
   - component: {fileID: 3141536444367095589}
+  - component: {fileID: 2906303890590916876}
   m_Layer: 0
   m_Name: LowerBackLeg.L
   m_TagString: Untagged
@@ -1081,6 +1108,18 @@ CharacterJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &2906303890590916876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7296933441443620550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 856c68bdab9f6744c84d53f524861184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7600128806015174248
 GameObject:
   m_ObjectHideFlags: 0
@@ -1093,6 +1132,7 @@ GameObject:
   - component: {fileID: 3141536444367095591}
   - component: {fileID: 3141536444367095590}
   - component: {fileID: 3141536444367095612}
+  - component: {fileID: 6007193424360225099}
   m_Layer: 0
   m_Name: LowerBackLeg.R
   m_TagString: Untagged
@@ -1190,6 +1230,18 @@ CharacterJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &6007193424360225099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7600128806015174248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 856c68bdab9f6744c84d53f524861184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7902988263579191996
 GameObject:
   m_ObjectHideFlags: 0

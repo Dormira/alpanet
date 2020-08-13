@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class displayFramerate : MonoBehaviour
+public class DisplayFramerate : MonoBehaviour
 {
     //If this is activated, displays the framerate in the upper right hand corner of the screen
     void OnGUI()
