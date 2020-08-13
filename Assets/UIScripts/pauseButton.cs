@@ -10,4 +10,12 @@ public class PauseButton : MonoBehaviour
         }
 
     }
+
+    void Update()
+    {
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
+    }
 }

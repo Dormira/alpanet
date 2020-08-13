@@ -3,33 +3,31 @@
 public class SelectAlpacaMenu : MonoBehaviour
 {
     public Texture[] portraits;
-    // Start is called before the first frame update
 
-    // Update is called once per frame
     void OnGUI()
     {
-        GameObject[] alpacas = GameObject.FindGameObjectsWithTag("Alpaca");
-        if (alpacas.Length != portraits.Length)
+        if (SpawnManager.alpacaIndex.Count != portraits.Length)
         {
             refreshAlpacaPortraits();
         }
-        for (int i = 0; i < alpacas.Length; i++)
+        for (int i = 0; i < SpawnManager.alpacaIndex.Count; i++)
         {
             if (GUI.Button(new Rect(50*i, 25, 50, 50), portraits[i])){
                 Camera.main.GetComponent<FollowGameObject>().setTarget(i);
             }
         }
-
     }
     
     void refreshAlpacaPortraits()
     {
-        GameObject[] alpacas = GameObject.FindGameObjectsWithTag("Alpaca");
-        portraits = new Texture[alpacas.Length];
-        for(int i = 0; i < alpacas.Length; i++)
+        //We don't need to do this anymore
+        portraits = new Texture[SpawnManager.alpacaIndex.Count];
+        for(int i = 0; i < SpawnManager.alpacaIndex.Count; i++)
         {
-            Snapshot snapscript = alpacas[i].GetComponent<Snapshot>();
+            string alpacaID = SpawnManager.alpacaIndex[i];
+            Snapshot snapscript = GameObject.Find(alpacaID).GetComponent<Snapshot>();
             portraits[i] = snapscript.getSnapshot();
+            
         }
     }
 
