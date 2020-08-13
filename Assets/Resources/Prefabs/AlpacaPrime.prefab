@@ -868,7 +868,7 @@ CharacterJoint:
     bounciness: 0
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
+  m_ProjectionDistance: 0
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -900,6 +900,7 @@ GameObject:
   - component: {fileID: 3141536444367095611}
   - component: {fileID: 3141536444367095608}
   - component: {fileID: 3141536444367095610}
+  - component: {fileID: 4700661223210076813}
   m_Layer: 0
   m_Name: Hips
   m_TagString: Untagged
@@ -998,6 +999,18 @@ CharacterJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &4700661223210076813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6826157707560282108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 856c68bdab9f6744c84d53f524861184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7296933441443620550
 GameObject:
   m_ObjectHideFlags: 0
