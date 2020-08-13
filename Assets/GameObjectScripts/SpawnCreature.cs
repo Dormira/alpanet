@@ -2,18 +2,15 @@
 
 public class SpawnCreature : MonoBehaviour
 {
-    public Object alpacaPrefab;
-    int alpacaIndex = 0;
-
-    void Start()
-    {
-        alpacaPrefab = Resources.Load<GameObject>("Prefabs/AlpacaPrime");
-        spawnAlpaca();
-    }
+    /*
+     * This is really a spawnmanager specific script, 
+     * but that may not stay the case so it makes sense to me to keep it with the generic GameObject scripts for now
+     */
+    public int alpacaIndex = 0;
 
     void Update()
     {
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("space") & alpacaIndex < 10)
         {
             spawnAlpaca();
         }
@@ -21,6 +18,7 @@ public class SpawnCreature : MonoBehaviour
 
     void spawnAlpaca()
     {
+        Object alpacaPrefab = Resources.Load<GameObject>("Prefabs/AlpacaPrime");
         //Instantiate the new alpaca
         GameObject alpacaObject = Instantiate(alpacaPrefab) as GameObject;
 

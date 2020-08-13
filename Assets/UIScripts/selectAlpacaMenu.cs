@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class selectAlpacaMenu : MonoBehaviour
+public class SelectAlpacaMenu : MonoBehaviour
 {
     public Texture[] portraits;
     // Start is called before the first frame update
@@ -18,7 +15,6 @@ public class selectAlpacaMenu : MonoBehaviour
         }
         for (int i = 0; i < alpacas.Length; i++)
         {
-
             if (GUI.Button(new Rect(50*i, 25, 50, 50), portraits[i])){
                 Camera.main.GetComponent<FollowGameObject>().setTarget(alpacas[i]);
             }

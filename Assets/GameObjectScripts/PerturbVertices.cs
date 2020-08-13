@@ -12,7 +12,7 @@ using System.Security.Cryptography;
 using System.Linq;
 
 
-public class wiggle : MonoBehaviour {
+public class PerturbVertices : MonoBehaviour {
 
     void Start() {
         Mesh mesh = getMesh();

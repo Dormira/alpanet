@@ -1,11 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public class spawnOnCollide : MonoBehaviour
+public class SpawnOnCollide : MonoBehaviour
 {
-    // Update is called once per frame
+    //This should send a signal to the spawnmanager IMO
     void OnCollisionEnter(Collision collision)
     {
         string collisionName = collision.gameObject.name;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class useSerializedMesh : MonoBehaviour
+public class UseSerializedMesh : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
