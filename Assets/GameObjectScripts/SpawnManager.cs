@@ -43,11 +43,7 @@ public class SpawnManager : MonoBehaviour
             UnityEngine.Random.Range(0f, 1f),
             1f);
 
-        //Get the mesh child of the alpaca, then the mesh renderer component of the mesh
-        GameObject alpacaMesh = alpacaObject.transform.Find("AlpacaMesh").gameObject;
-        var alpacaRenderer = alpacaMesh.GetComponent<SkinnedMeshRenderer>();
-
-        //Set the albedo color of the material
-        alpacaRenderer.material.SetColor("_Color", color);
+        //Get the mesh child of the alpaca, then the mesh renderer component of the mesh, then set the albedo color
+        alpacaObject.transform.Find("AlpacaMesh").gameObject.GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", color);
     }
 }

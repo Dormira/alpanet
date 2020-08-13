@@ -15,11 +15,11 @@ public class Tutorial : MonoBehaviour
     void OnGUI()
     {
         string displayText;
-        if (GameObject.FindGameObjectsWithTag("Alpaca").Length == 0)
+        if (SpawnManager.alpacaIndex.Count == 0)
         {
             displayText = "PRESS THE SPACEBAR";
         } 
-        else if(GameObject.FindGameObjectsWithTag("Alpaca").Length == 1)
+        else if(SpawnManager.alpacaIndex.Count == 1)
         {
             displayText = "PRESS THE SPACEBAR AGAIN";
         }

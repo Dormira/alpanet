@@ -18,9 +18,6 @@ public class FollowGameObject : MonoBehaviour
         //This should take an index number to SpawnManager
         currentAlpacaIndex = alpacaIndex;
         GameObject target = GameObject.Find(SpawnManager.alpacaIndex[alpacaIndex]);
-        // setTarget is not guaranteed to be called by a function that will modify the currentAlpacaIndex,
-        // and so currently swapping target alpacas via the GUI or by clicking and dragging or by spawning a new alpaca
-        // may cause the first left/right after that event to fail
         targetAlpacaMesh = target.transform.Find("AlpacaMesh").gameObject;
 
         alpvar = target.GetComponent<AlpacaVariables>();
@@ -28,40 +25,29 @@ public class FollowGameObject : MonoBehaviour
 
     void Update()
     {
-        //TODO: Theoretically, we could manage a counter in the spawner, so that we know the
-        //number of alpacas without having to check each frame, but this shouldn't cause any
-        //real performance issues for now.
-
-        //This might actually be causing performance issues
-
-
-        //If there's no alpaca then just have the camera sit pointing 
+        //If there's no alpaca then just have the camera sit pointing at nothing. It's fine.
         if(targetAlpacaMesh == null){
             return;
         }
 
         if (Input.GetKeyDown("left"))
         {
-            GameObject[] alpacaObjects = GameObject.FindGameObjectsWithTag("Alpaca");
             //Decrement and wrap if necessary
             currentAlpacaIndex--;
             if (currentAlpacaIndex < 0)
             {
-                currentAlpacaIndex = alpacaObjects.Length - 1;
+                currentAlpacaIndex = SpawnManager.alpacaIndex.Count - 1;
             }
-            UnityEngine.Debug.Log(currentAlpacaIndex);
             setTarget(currentAlpacaIndex);
         }
         else if (Input.GetKeyDown("right"))
         {
-            GameObject[] alpacaObjects = GameObject.FindGameObjectsWithTag("Alpaca");
             //Increment and wrap if necessary
             currentAlpacaIndex++;
-            if (currentAlpacaIndex > alpacaObjects.Length - 1)
+            if (currentAlpacaIndex > SpawnManager.alpacaIndex.Count - 1)
             {
                 currentAlpacaIndex = 0;
             }
-            UnityEngine.Debug.Log(currentAlpacaIndex);
             setTarget(currentAlpacaIndex);
         }
 
