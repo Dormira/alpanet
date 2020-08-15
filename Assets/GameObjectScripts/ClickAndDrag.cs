@@ -26,7 +26,7 @@ public class ClickAndDrag : MonoBehaviour
         GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
         //Set the primary camera to follow the target
         int targetIndex = SpawnManager.alpacaIndex.IndexOf(transform.root.name);
-        GameObject.Find("MainCamera").GetComponent<FollowGameObject>().setTarget(targetIndex);
+        Camera.main.gameObject.GetComponent<FollowGameObject>().setTarget(targetIndex);
     }
 
     void OnMouseDrag()
@@ -36,7 +36,7 @@ public class ClickAndDrag : MonoBehaviour
 
         RaycastHit hit;
         Physics.Raycast(ray, out hit, 9999, 1 << LayerMask.NameToLayer("Terrain"));
-        Vector3 newPoint = ray.GetPoint(hit.distance-5);
+        Vector3 newPoint = ray.GetPoint(hit.distance-1);
         transform.position = newPoint;
     }
 }

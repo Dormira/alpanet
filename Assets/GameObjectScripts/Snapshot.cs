@@ -21,7 +21,7 @@ public class Snapshot : MonoBehaviour
     {
         //Get the target and the camera
         GameObject target = transform.Find("AlpacaMesh").gameObject;
-        GameObject cameraObject = GameObject.Find("MainCamera");
+        GameObject cameraObject = Camera.main.gameObject;
         //Save the camera's old transform so we can put it back
         Transform oldTransform = cameraObject.transform;
         //Change the transform so we get the shot we want

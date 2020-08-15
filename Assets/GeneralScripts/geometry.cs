@@ -53,10 +53,10 @@ public class GeometryFunctions{
     /*
      * This is roughly Moller's triangle-triangle intersection algorithm
      * Small modifications to count cases where triangles share one or two vertices as a non-intersection
-     * since that's a valid way for triangles to be in a model
+     * since that's a valid way for triangles to be in a 3Dmodel
      * 
-     * True if the triangles don't intersect
-     * False if they do
+     * Returns True if the triangles don't intersect
+     * Returns False if they do
      */
     public static bool triangleNonintersectCheck(Vector3[] triangleA, Vector3[] triangleB)
     {

@@ -8,8 +8,7 @@ public class generateTerrain : MonoBehaviour
 
     void Start()
     {
-        Terrain terrain = this.GetComponent<Terrain>();
-        TerrainData terrainData = terrain.terrainData;
+        TerrainData terrainData = this.GetComponent<Terrain>().terrainData;
         int terrainResolution = terrainData.heightmapResolution;
 
         terrainData.SetHeights(0, 0, generateHeightmap(terrainResolution));
@@ -19,6 +18,9 @@ public class generateTerrain : MonoBehaviour
         //TEXTURES
         int numTextures = 2;
         //Now do alphamap stuff at it
+
+        //8/13/2020 - Tried calling SetAlphamaps on each "pixel" of the alphamap individually
+        //This made all of my problems much worse, so don't do that
         float[,,] alphamap = new float[terrainData.alphamapWidth,
                                        terrainData.alphamapHeight, numTextures];
 
@@ -78,8 +80,6 @@ public class generateTerrain : MonoBehaviour
         boxblur(ref newHeightmap);
         boxblur(ref newHeightmap);
         return newHeightmap;
-        
-        //Set the heights
 
     }
 
@@ -114,7 +114,7 @@ public class generateTerrain : MonoBehaviour
     void boxblur(ref float[,] array)
     {
         //Not exactly a boxblur anymore because we're not doing our blur on a fresh copy of array
-        //But it still smooths the contours of our heightmap without making webgl shit itself
+        //But it still smooths the contours of our heightmap without killing webgl
         int dist = 16;
         int length = array.GetLength(0);
         float sumval;

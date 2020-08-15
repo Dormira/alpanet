@@ -13,10 +13,12 @@ using System.Linq;
 
 
 public class PerturbVertices : MonoBehaviour {
+    //This script needs to be placed on the object whose immediate child is the mesh
 
     void Start() {
         Mesh mesh = getMesh();
-        GeometryFunctions.weldVertices(mesh);
+        //Temporarily disabled to test 256sphere
+    //    GeometryFunctions.weldVertices(mesh);
     }
 
     // Update is called once per frame
@@ -99,16 +101,17 @@ public class PerturbVertices : MonoBehaviour {
 
     Mesh getMesh()
     {
-        //get child model
-        GameObject model = this.transform.GetChild(1).gameObject;
-
-        if (model.GetComponent<MeshFilter>())
+        //This function gets the mesh of the object it is attached to. It must be attached to an object with a mesh
+        //Not the parent of an object with a mesh
+        //Not the child of an object with a mesh
+        //The mesh containing object itself
+        if (this.GetComponent<MeshFilter>())
         {
-            return model.GetComponent<MeshFilter>().sharedMesh;
+            return this.GetComponent<MeshFilter>().sharedMesh;
         }
-        else if (model.GetComponent<SkinnedMeshRenderer>())
+        else if (this.GetComponent<SkinnedMeshRenderer>())
         {
-            return model.GetComponent<SkinnedMeshRenderer>().sharedMesh;
+            return this.GetComponent<SkinnedMeshRenderer>().sharedMesh;
         }
 
         return null;
