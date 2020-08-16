@@ -8,35 +8,30 @@ using UnityEditor;
 using System.Diagnostics;
 using System.Collections.Specialized;
 using System;
-using System.Security.Cryptography;
 using System.Linq;
 
 
 public class PerturbVertices : MonoBehaviour {
     //This script needs to be placed on the object whose immediate child is the mesh
-
     void Start() {
         Mesh mesh = getMesh();
         GeometryFunctions.weldVertices(mesh);
+        perturbMesh();
+
     }
 
-    // Update is called once per frame
-    void Update() {
-        if (Input.GetKeyDown("w"))
-        {
-            Mesh mesh = getMesh();
-            //Change the model vertices
-            Vector3[] nv = newVertices();
-            Vector2[] nuv = mesh.uv;//newUV(nv);
-            int[] nt = mesh.triangles;
+    void perturbMesh()
+    {
+        Mesh mesh = getMesh();
+        //Change the model vertices
+        Vector3[] nv = newVertices();
+        Vector2[] nuv = mesh.uv;
+        int[] nt = mesh.triangles;
 
-            mesh.vertices = nv;
-            mesh.uv = nuv;
-            mesh.triangles = nt;
-            mesh.Optimize();
-            //Maybe the model should be saved after optimize
-            //We have to update the mesh collider too
-        }
+        mesh.vertices = nv;
+        mesh.uv = nuv;
+        mesh.triangles = nt;
+        mesh.Optimize();
     }
 
     Vector3 wiggleVector3(Vector3 vector, float diff)
@@ -67,6 +62,9 @@ public class PerturbVertices : MonoBehaviour {
         Vector3[] newVertices = new Vector3[oldVertices.Length];
 
         bool verticesUpdatedSuccessfully = false;
+
+        Vector3[] triangleA = new Vector3[3];//Lets not allocate new vector3s so much
+        Vector3[] triangleB = new Vector3[3];
         do
         {
             verticesUpdatedSuccessfully = true;
@@ -79,10 +77,15 @@ public class PerturbVertices : MonoBehaviour {
             //Check the triangles for collisions
             for (int i = 0; i < triangles.Count(); i += 3)
             {
-                Vector3[] triangleA = triangles.Skip(i).Take(3).Select(x => newVertices[x]).ToArray();
+                triangleA[0] = newVertices[triangles[i]];
+                triangleA[1] = newVertices[triangles[i + 1]];
+                triangleA[2] = newVertices[triangles[i + 2]];
+               
                 for (int j = i + 3; j < triangles.Count(); j += 3)
                 {
-                    Vector3[] triangleB = triangles.Skip(j).Take(3).Select(x => newVertices[x]).ToArray();
+                    triangleB[0] = newVertices[triangles[j]];
+                    triangleB[1] = newVertices[triangles[j + 1]];
+                    triangleB[2] = newVertices[triangles[j + 2]];
 
                     if (!GeometryFunctions.triangleNonintersectCheck(triangleA, triangleB))
                     {
@@ -93,7 +96,8 @@ public class PerturbVertices : MonoBehaviour {
             }
         } while (!verticesUpdatedSuccessfully);
 
-        MeshSerializer.serializeMesh(mesh, this.name);
+        //We can't serialize this on live
+        //MeshSerializer.serializeMesh(mesh, this.name);
 
         return newVertices;
     }
