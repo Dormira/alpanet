@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 
@@ -235,47 +236,51 @@ public class GeometryFunctions{
      * 
      * I also don't think that this file is the appropriate place for a vertex welding function, need to figure out a better place for it
      * Maybe I should have a separate file just for mesh modification functions
+     * 
+     * So given a list of vertices and a list of triangles
+     * Where the triangles are references into the vertex list
+     * 
+     * 
      */
 
     public static (Vector3[], int[]) weldVertices(Mesh mesh)
     {
-        Vector3[] vertices = mesh.vertices;
-        int[] triangles = mesh.triangles;
-
-        //Triangles modification loop
-        for (int i = 0; i < vertices.Length; i++)
+        List<Vector3> vertices = new List<Vector3>(mesh.vertices);
+        List<int> triangles = new List<int>(mesh.triangles);
+        
+        for (int i = 0; i < vertices.Count; i++)
         {
             Vector3 vertexA = vertices[i];
-            for (int j = i+1; j < vertices.Length; j++)
+            for (int j = i+1; j < vertices.Count; j++)
             {
                 Vector3 vertexB = vertices[j]; 
                 if(vertexA == vertexB)
                 {
                     //Find all references to j in triangles and set it to be i instead
-                    for (int k = 0; k < triangles.Length; k++)
+                    for (int k = 0; k < triangles.Count; k++)
                     {
                         int triIndex = triangles[k];
                         if(triIndex == j)
                         {
+                            //Replace if it's a match
                             triangles[k] = i;
                         }
+                        if(triIndex > j)
+                        {
+                            //Or Downshift if it would be affected by our deletion
+                            triangles[k] = triangles[k] - 1;
+                        }
                     }
+                    //Now remove the element at j from vertices because it's a dupe
+                    vertices.RemoveAt(j);
+                    //And we have to redo that j index because the new j is the former j+1
+                    j--;
                 }
             }
         }
 
-        //Now reconstruct vertices
-        //For every vertex in vertices
-        //If its index doesn't exist in triIndex
-        Vector3[] newVertices = new Vector3[triangles.Distinct().Count()];
-
-        foreach (int vertexIndex in triangles.Distinct())
-        {
-            newVertices[vertexIndex] = mesh.vertices[vertexIndex];
-        }
-
-        mesh.triangles = triangles;
-        mesh.vertices = newVertices;
+        mesh.triangles = triangles.ToArray();
+        mesh.vertices = vertices.ToArray();
         return (mesh.vertices, mesh.triangles);
     }
 

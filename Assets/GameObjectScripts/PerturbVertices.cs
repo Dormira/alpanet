@@ -17,8 +17,7 @@ public class PerturbVertices : MonoBehaviour {
 
     void Start() {
         Mesh mesh = getMesh();
-        //Temporarily disabled to test 256sphere
-    //    GeometryFunctions.weldVertices(mesh);
+        GeometryFunctions.weldVertices(mesh);
     }
 
     // Update is called once per frame
@@ -94,7 +93,7 @@ public class PerturbVertices : MonoBehaviour {
             }
         } while (!verticesUpdatedSuccessfully);
 
-        meshSerializer.serializeMesh(mesh, this.name);
+        MeshSerializer.serializeMesh(mesh, this.name);
 
         return newVertices;
     }

@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Linq;
 using System;
 
-public class meshSerializer
+public class MeshSerializer
 {
     /*
      * This code takes a mesh and serializes it for loading later

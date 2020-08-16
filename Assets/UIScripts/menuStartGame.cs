@@ -6,35 +6,44 @@ using UnityEngine.SceneManagement;
 
 public class MenuStartGame : MonoBehaviour
 {
-    UnityEngine.AsyncOperation loadGameOperation;
+    Dictionary<string, UnityEngine.AsyncOperation> loadSceneOperations = new Dictionary<string, UnityEngine.AsyncOperation>();
+
     void Start()
     {
         //If the main menu is loaded, we should start loading the game behind the scenes to minimize wait times
-        StartCoroutine(LoadScene());
+        //But none of our scenes are large enough for this to matter yet
+        loadSceneOperations.Add("flatWorld", new UnityEngine.AsyncOperation());
+        loadSceneOperations.Add("roundWorld", new UnityEngine.AsyncOperation());
     }
 
     void OnGUI()
     {
-        if(!(loadGameOperation.progress >= 0.9)){
-            if (GUI.Button(new Rect((Screen.width / 2) - 100, (Screen.height / 2) - 25, 200, 50), "START GAME"))
+        int idx = 0;
+        foreach (KeyValuePair<string, UnityEngine.AsyncOperation> entry in loadSceneOperations)
+        {
+            idx++;
+            if (GUI.Button(new Rect((Screen.width / 2) - 100, (Screen.height / 2) - (50*idx), 200, 50), entry.Key))
             {
-                loadGameOperation.allowSceneActivation = true;
+                StartCoroutine(LoadScene(entry.Key));
             }
         }
-        else
-        {
 
-            GUI.Label(new Rect(Screen.width / 2, Screen.height / 2, 200, 50), "LOADING...");
-        }
-        //Start game button, activates pre-loaded scene
     }
 
     //This function loads the game scene, but the start button activates it
-    IEnumerator LoadScene()
+    IEnumerator LoadScene(string sceneName)
     {
         yield return null;
-
-        loadGameOperation = SceneManager.LoadSceneAsync("game");
-        loadGameOperation.allowSceneActivation = false;
+        loadSceneOperations[sceneName] = SceneManager.LoadSceneAsync(sceneName);
+        loadSceneOperations[sceneName].allowSceneActivation = true;
     }
+
+    //Unloads a scene by name. Unity hates having more than one scene loaded
+    IEnumerator unloadScene(string sceneName)
+    {
+        yield return null;
+        SceneManager.UnloadSceneAsync(sceneName);
+    }
+
+
 }

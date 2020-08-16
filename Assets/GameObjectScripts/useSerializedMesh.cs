@@ -9,7 +9,7 @@ public class UseSerializedMesh : MonoBehaviour
     {
         Mesh mesh = GetComponent<MeshFilter>().mesh;
         //deserializeMesh returns a default mesh, if the requested one doesn't exist
-        Mesh loadedMesh = meshSerializer.deserializeMesh(this.name);
+        Mesh loadedMesh = MeshSerializer.deserializeMesh(this.name);
       
         mesh.triangles = loadedMesh.triangles;
         mesh.vertices = loadedMesh.vertices;
