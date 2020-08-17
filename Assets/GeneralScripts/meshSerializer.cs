@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using UnityEngine;
+using System.IO;//For saving to disk
+using System.Runtime.Serialization.Formatters.Binary;//For the binary formatter
 using System.Linq;
 using System;
 

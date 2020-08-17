@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -229,18 +225,9 @@ public class GeometryFunctions{
      * weldVertices should return a vertex and triangle list of an optimized version of the given mesh
      * Welding colocated vertices of our model together leads to cleaner mesh modifications and improves performance somewhat
      * 
-     * TODO:
-     * Right now this function assumes that our vertex array is of the form [unique vertices][non-unique vertices]
-     * That's not necessarily the case and in fact will cause problems with more complex models
-     * Such as the new and improved, totally non-cubic alpacas :)
      * 
      * I also don't think that this file is the appropriate place for a vertex welding function, need to figure out a better place for it
      * Maybe I should have a separate file just for mesh modification functions
-     * 
-     * So given a list of vertices and a list of triangles
-     * Where the triangles are references into the vertex list
-     * 
-     * 
      */
 
     public static (Vector3[], int[]) weldVertices(Mesh mesh)

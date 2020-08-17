@@ -1,14 +1,4 @@
-﻿//Visualstudio loves to automatically import libraries, but not prune them
-//TODO: remove the unnecessary ones. they bother me a little
-using System.Runtime.InteropServices;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using System.Diagnostics;
-using System.Collections.Specialized;
-using System;
-using System.Linq;
+﻿using UnityEngine;
 
 
 public class PerturbVertices : MonoBehaviour {
@@ -34,12 +24,12 @@ public class PerturbVertices : MonoBehaviour {
         mesh.Optimize();
     }
 
-    Vector3 wiggleVector3(Vector3 vector, float diff)
+    void wiggleVector3(ref Vector3 vector, float diff)
     {
-        Vector3 newVector = new Vector3(UnityEngine.Random.Range(vector[0] - diff, vector[0] + diff),
+        vector = new Vector3(UnityEngine.Random.Range(vector[0] - diff, vector[0] + diff),
                                      UnityEngine.Random.Range(vector[1] - diff, vector[1] + diff),
                                      UnityEngine.Random.Range(vector[2] - diff, vector[2] + diff));
-        return newVector;
+      //  return newVector;
     }
 
     Vector2[] newUV(Vector3[] vertices)
@@ -56,32 +46,33 @@ public class PerturbVertices : MonoBehaviour {
     Vector3[] newVertices()
     {
         Mesh mesh = getMesh();
-        Vector3[] oldVertices = mesh.vertices;
         int[] triangles = mesh.triangles;
-        
-        Vector3[] newVertices = new Vector3[oldVertices.Length];
 
-        bool verticesUpdatedSuccessfully = false;
+
 
         Vector3[] triangleA = new Vector3[3];//Lets not allocate new vector3s so much
         Vector3[] triangleB = new Vector3[3];
+
+        bool verticesUpdatedSuccessfully;
+        Vector3[] newVertices;
         do
         {
+            newVertices = mesh.vertices;
             verticesUpdatedSuccessfully = true;
             //Modify the vertices
             for (int i = 0; i < newVertices.Length; i++)
             {
-                newVertices[i] = wiggleVector3(oldVertices[i], 0.1f);
+                wiggleVector3(ref newVertices[i], 0.1f);
             }
 
             //Check the triangles for collisions
-            for (int i = 0; i < triangles.Count(); i += 3)
+            for (int i = 0; i < triangles.Length; i += 3)
             {
                 triangleA[0] = newVertices[triangles[i]];
                 triangleA[1] = newVertices[triangles[i + 1]];
                 triangleA[2] = newVertices[triangles[i + 2]];
                
-                for (int j = i + 3; j < triangles.Count(); j += 3)
+                for (int j = i + 3; j < triangles.Length; j += 3)
                 {
                     triangleB[0] = newVertices[triangles[j]];
                     triangleB[1] = newVertices[triangles[j + 1]];
@@ -96,8 +87,8 @@ public class PerturbVertices : MonoBehaviour {
             }
         } while (!verticesUpdatedSuccessfully);
 
-        //We can't serialize this on live
-        //MeshSerializer.serializeMesh(mesh, this.name);
+
+        MeshSerializer.serializeMesh(mesh, this.name);
 
         return newVertices;
     }
