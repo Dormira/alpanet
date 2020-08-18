@@ -48,8 +48,6 @@ public class PerturbVertices : MonoBehaviour {
         Mesh mesh = getMesh();
         int[] triangles = mesh.triangles;
 
-
-
         Vector3[] triangleA = new Vector3[3];//Lets not allocate new vector3s so much
         Vector3[] triangleB = new Vector3[3];
 
