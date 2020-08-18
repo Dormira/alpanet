@@ -4,7 +4,7 @@
 public class PerturbVertices : MonoBehaviour {
     //This script needs to be placed on the object whose immediate child is the mesh
     void Start() {
-        Mesh mesh = getMesh();
+        Mesh mesh = MeshGetters.getMesh(this.gameObject);
         GeometryFunctions.weldVertices(mesh);
         perturbMesh();
 
@@ -12,7 +12,7 @@ public class PerturbVertices : MonoBehaviour {
 
     void perturbMesh()
     {
-        Mesh mesh = getMesh();
+        Mesh mesh = MeshGetters.getMesh(this.gameObject);
         //Change the model vertices
         Vector3[] nv = newVertices();
         Vector2[] nuv = mesh.uv;
@@ -29,7 +29,6 @@ public class PerturbVertices : MonoBehaviour {
         vector = new Vector3(UnityEngine.Random.Range(vector[0] - diff, vector[0] + diff),
                                      UnityEngine.Random.Range(vector[1] - diff, vector[1] + diff),
                                      UnityEngine.Random.Range(vector[2] - diff, vector[2] + diff));
-      //  return newVector;
     }
 
     Vector2[] newUV(Vector3[] vertices)
@@ -45,7 +44,7 @@ public class PerturbVertices : MonoBehaviour {
 
     Vector3[] newVertices()
     {
-        Mesh mesh = getMesh();
+        Mesh mesh = MeshGetters.getMesh(this.gameObject);
         int[] triangles = mesh.triangles;
 
         Vector3[] triangleA = new Vector3[3];//Lets not allocate new vector3s so much
@@ -91,23 +90,9 @@ public class PerturbVertices : MonoBehaviour {
         return newVertices;
     }
 
-    Mesh getMesh()
-    {
-        //This function gets the mesh of the object it is attached to. It must be attached to an object with a mesh
-        //Not the parent of an object with a mesh
-        //Not the child of an object with a mesh
-        //The mesh containing object itself
-        if (this.GetComponent<MeshFilter>())
-        {
-            return this.GetComponent<MeshFilter>().sharedMesh;
-        }
-        else if (this.GetComponent<SkinnedMeshRenderer>())
-        {
-            return this.GetComponent<SkinnedMeshRenderer>().sharedMesh;
-        }
 
-        return null;
-    }
+
+
 
 }
 

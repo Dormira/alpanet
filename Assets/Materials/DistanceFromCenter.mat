@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Grass
+  m_Name: DistanceFromCenter
   m_Shader: {fileID: 4800000, guid: a6fa38252b38a4244b768ac186432532, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
