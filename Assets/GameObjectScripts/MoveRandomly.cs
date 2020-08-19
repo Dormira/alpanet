@@ -23,7 +23,6 @@ public class MoveRandomly : MonoBehaviour
             rb.velocity = new Vector3(UnityEngine.Random.Range(-maxForce, maxForce),
                             UnityEngine.Random.Range(-maxForce, maxForce),
                             UnityEngine.Random.Range(-maxForce, maxForce));
-            UnityEngine.Debug.Log("APPLYING FORCE "+rb.velocity);
         }
 
     }

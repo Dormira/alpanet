@@ -1,23 +1,65 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using UnityEngine;
 
 
 public class GeometryFunctions{
-    /*
-     * Calculates and returns the area of the given triangle
-     */
-    public static int triangleArea(Vector3[] triangle)
+
+    public static Vector3[] getNLocationsOnTriangle(Vector3[] triangle, int nPoints)
+    {
+        Vector3[] points = new Vector3[nPoints];
+        
+        Vector3 t0 = triangle[0];
+        Vector3 t1 = triangle[1];
+        Vector3 t2 = triangle[2];
+
+        float seedA, seedB;
+
+        for (int i = 0; i < nPoints; i++)
+        {
+            /*
+            seedA = Random.Range(0f, 1f);
+            seedB = Random.Range(0f, 1f);
+            points[i] = new Vector3(t0.x + seedA * (t1.x - t0.x) + seedB * (t2.x - t0.x),
+                t0.y + seedA * (t1.y - t0.y) + seedB * (t2.y - t0.y),
+                t0.z + seedA * (t1.z - t0.z) + seedB * (t2.z - t0.z));
+            */
+
+            //Debug: center of triangle
+            points[i] = getCentroidOfTriangle(triangle);
+        }
+
+        return points;
+    }
+
+    public static Vector3 getCentroidOfTriangle(Vector3[] triangle)
     {
         Vector3 t0 = triangle[0];
         Vector3 t1 = triangle[1];
         Vector3 t2 = triangle[2];
 
-
-        dist01 = Vector3.Distance(t0, t1);
-        dist02 = Vector3.Distance(t0, t2);
-        dist12 = Vector3.Distance(t1, t2);
+        Vector3 ret = (t0 + t1 + t2) / 3f;
+        return ret;
 
 
+    }
+
+    /*
+     * Calculates and returns the area of the given triangle
+     */
+    public static float getTriangleArea(Vector3[] triangle)
+    {
+        Vector3 t0 = triangle[0];
+        Vector3 t1 = triangle[1];
+        Vector3 t2 = triangle[2];
+
+        float dist01 = Vector3.Distance(t0, t1);
+        float dist02 = Vector3.Distance(t0, t2);
+        float dist12 = Vector3.Distance(t1, t2);
+
+        float p = (dist01 + dist02 + dist12) / 2;
+
+        return Mathf.Sqrt(Mathf.Abs(p*(p-dist01)*(p-dist02)*p-(dist12)));
     }
     /*
      * Calculates and returns the plane equation of the given triangle
@@ -248,6 +290,7 @@ public class GeometryFunctions{
 
     public static (Vector3[], int[]) weldVertices(Mesh mesh)
     {
+        //The shame I feel in using Linq is nothing compared to the frustration I'd feel not using Linq
         List<Vector3> vertices = new List<Vector3>(mesh.vertices);
         List<int> triangles = new List<int>(mesh.triangles);
         
