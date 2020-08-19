@@ -48,7 +48,8 @@ public class Grass : MonoBehaviour
                     Matrix4x4[] gtBufferCopy = (Matrix4x4[])grassTransformBuffer.Clone();
                     grassTransforms.Add(gtBufferCopy);
                 }
-                grassTransformBuffer[gtbi] = Matrix4x4.Translate(grassLocs[j]);
+                Quaternion rotationQuat = Quaternion.FromToRotation(transform.up, GeometryFunctions.getTriangleNormal(curVertices));
+                grassTransformBuffer[gtbi] = Matrix4x4.TRS(grassLocs[j], rotationQuat, new Vector3(1,1,1));
                 gtbi++;
             }
         }

@@ -62,6 +62,25 @@ public class GeometryFunctions{
 
         return Mathf.Sqrt(Mathf.Abs(p*(p-dist01)*(p-dist02)*p-(dist12)));
     }
+
+    /*
+     * Calculates and returns the plane equation of the given triangle
+     */
+    public static Vector3 getTriangleNormal(Vector3[] triangle)
+    {
+        //Get the vertices of the triangle
+        Vector3 t0 = triangle[0];
+        Vector3 t1 = triangle[1];
+        Vector3 t2 = triangle[2];
+
+        Vector3 ab = t1 - t0;
+        Vector3 ac = t2 - t0;
+        //Take the cross product to determine a, b, and c
+        Vector3 normal = Vector3.Cross(ab, ac);
+
+        return new Vector3(normal.x, normal.y, normal.z);
+    }
+
     /*
      * Calculates and returns the plane equation of the given triangle
      */
