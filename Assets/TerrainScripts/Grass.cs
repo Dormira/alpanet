@@ -14,7 +14,7 @@ public class Grass : MonoBehaviour
     {
         //Get the mesh and the material from the 
         this.mesh = MeshGetters.getQuadMesh(1f, 5f);
-        this.grassRenderMaterial = Resources.Load<Material>("Materials/pink");
+        this.grassRenderMaterial = Resources.Load<Material>("Materials/Grass");
         grassTransforms = new List<Matrix4x4[]>();
 
         float grassDensity = 0.1f;//1 blade of grass per area unit

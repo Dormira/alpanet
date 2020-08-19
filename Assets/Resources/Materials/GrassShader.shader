@@ -1,11 +1,12 @@
 ﻿Shader "Grass" {
     Properties{
-       _MainTex("Texture Image", 2D) = "white" {}
+       _MainTex("Color (RGB) Alpha (A)", 2D) = "white" {}
        _ScaleX("Scale X", Float) = 1.0
        _ScaleY("Scale Y", Float) = 1.0
-       _Color1("First Color", Color) = (0.5,1,1,1)
+       _Color1("First Color", Color) = (1,1,1,1)
     }
         SubShader{
+           Blend SrcAlpha OneMinusSrcAlpha
            Pass {
               CGPROGRAM
 
@@ -16,7 +17,7 @@
               uniform sampler2D _MainTex;
               uniform float _ScaleX;
               uniform float _ScaleY;
-              uniform float _Color1;
+              uniform float4 _Color1;
 
               struct vertexInput {
                  float4 vertex : POSITION;
@@ -44,7 +45,15 @@
               float4 frag(vertexOutput input) : COLOR
               {
 
-                 return tex2D(_MainTex, float2(input.tex.xy))*_Color1;
+                  float4 rawTexel = tex2D(_MainTex, float2(input.tex.xy));
+                 // return rawTexel;
+                  //float4 transparent = float4(0,0,0,0);
+                  if (rawTexel.a == 0) {
+                      return float4(1, 0, 0, 0);
+                  }
+                  //All black pixels? Transparency
+                  return _Color1 * tex2D(_MainTex, float2(input.tex.xy));// + _Color1;
+                 //return float4(0.5, 0.2, 0.5, 1) * tex2D(_MainTex, float2(input.tex.xy));// + _Color1;
               }
 
               ENDCG
