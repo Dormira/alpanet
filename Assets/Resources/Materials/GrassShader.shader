@@ -12,6 +12,8 @@
 
               #pragma vertex vert  
               #pragma fragment frag
+              #pragma multi_compile_instancing
+              #include "UnityCG.cginc"
 
               // User-specified uniforms            
               uniform sampler2D _MainTex;
@@ -21,20 +23,28 @@
 
               struct vertexInput {
                  float4 vertex : POSITION;
-                 float4 tex : TEXCOORD0;
+                 float2 tex : TEXCOORD0;
+                 UNITY_VERTEX_INPUT_INSTANCE_ID
               };
               struct vertexOutput {
                  float4 pos : SV_POSITION;
-                 float4 tex : TEXCOORD0;
+                 float2 tex : TEXCOORD0;
               };
+
+              //This block defines the set of properties that are UNIQUE to each blade of grass
+              UNITY_INSTANCING_BUFFER_START(Props)
+                  //UNITY_DEFINE_INSTANCED_PROP(float4, _Color) 
+              UNITY_INSTANCING_BUFFER_END(Props)
 
               vertexOutput vert(vertexInput input)
               {
+                 UNITY_SETUP_INSTANCE_ID(input);
                  vertexOutput output;
+                 
 
-                 output.pos = mul(UNITY_MATRIX_P,
-                   mul(UNITY_MATRIX_MV, float4(0.0, 0.0, 0.0, 1.0))
-                   + float4(input.vertex.x, input.vertex.y, 0.0, 0.0)
+                 output.pos = mul(UNITY_MATRIX_P, 
+                   mul(UNITY_MATRIX_MV, float4(0.0, 0.0, 0.0, 1))
+                   + mul(unity_ObjectToWorld, float4(input.vertex.xyz, 0.0))
                    * float4(_ScaleX, _ScaleY, 1.0, 1.0));
 
                  output.tex = input.tex;
@@ -44,16 +54,9 @@
 
               float4 frag(vertexOutput input) : COLOR
               {
+                  float4 rawTexel = tex2D(_MainTex, float2(input.tex));
 
-                  float4 rawTexel = tex2D(_MainTex, float2(input.tex.xy));
-                 // return rawTexel;
-                  //float4 transparent = float4(0,0,0,0);
-                  if (rawTexel.a == 0) {
-                      return float4(1, 0, 0, 0);
-                  }
-                  //All black pixels? Transparency
-                  return _Color1 * tex2D(_MainTex, float2(input.tex.xy));// + _Color1;
-                 //return float4(0.5, 0.2, 0.5, 1) * tex2D(_MainTex, float2(input.tex.xy));// + _Color1;
+                  return _Color1 * tex2D(_MainTex, float2(input.tex));
               }
 
               ENDCG
