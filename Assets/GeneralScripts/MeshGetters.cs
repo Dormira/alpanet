@@ -65,10 +65,8 @@ public class MeshGetters
         return mesh;
     }
 
-    public static Mesh getQuadMesh()
+    public static Mesh getQuadMesh(float width = 1f, float height = 1f)
     {
-        float width = 2;
-        float height = 20;
 
         Mesh mesh = new Mesh();
         Vector3[] vertices = new Vector3[4]

@@ -17,16 +17,17 @@ public class GeometryFunctions{
 
         for (int i = 0; i < nPoints; i++)
         {
-            /*
             seedA = Random.Range(0f, 1f);
             seedB = Random.Range(0f, 1f);
+
+            if(seedA+seedB >= 1){
+                seedA = 1 - seedA;
+                seedB = 1 - seedB;
+            }
+
             points[i] = new Vector3(t0.x + seedA * (t1.x - t0.x) + seedB * (t2.x - t0.x),
                 t0.y + seedA * (t1.y - t0.y) + seedB * (t2.y - t0.y),
                 t0.z + seedA * (t1.z - t0.z) + seedB * (t2.z - t0.z));
-            */
-
-            //Debug: center of triangle
-            points[i] = getCentroidOfTriangle(triangle);
         }
 
         return points;
