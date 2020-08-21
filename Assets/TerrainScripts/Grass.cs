@@ -13,11 +13,11 @@ public class Grass : MonoBehaviour
     void Start()
     {
         //Get the mesh and the material from the 
-        this.mesh = MeshGetters.getQuadMesh(1f, 5f);
+        this.mesh = MeshGetters.getTriMesh(1f, 2f);
         this.grassRenderMaterial = Resources.Load<Material>("Materials/Grass");
         grassTransforms = new List<Matrix4x4[]>();
 
-        float grassDensity = 0.1f;//1 blade of grass per area unit
+        float grassDensity = 0.3f;//1 blade of grass per area unit
 
         int[] triangles = MeshGetters.getMeshTriangles(this.gameObject);
         Vector3[] vertices = MeshGetters.getMeshVertices(this.gameObject);

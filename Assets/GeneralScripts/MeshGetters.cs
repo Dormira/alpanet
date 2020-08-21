@@ -105,6 +105,29 @@ public class MeshGetters
         return mesh;
     }
 
+    public static Mesh getTriMesh(float width = 1f, float height = 1f)
+    {
+        Mesh mesh = new Mesh();
+        Vector3[] vertices = new Vector3[3]
+        {
+            new Vector3(0,height,0),
+            new Vector3(width/2, 0, 0),
+            new Vector3(-width/2, 0, 0),
+        };
+        mesh.vertices = vertices;
+
+        int[] tris = new int[3]
+        {
+            0,1,2
+        };
+        mesh.triangles = tris;
+
+        mesh.Optimize();
+        mesh.RecalculateNormals();
+
+        return mesh;
+    }
+
     public static int[] getMeshTriangles(GameObject objectWithMesh)
     {
         if (objectWithMesh.GetComponent<MeshFilter>())

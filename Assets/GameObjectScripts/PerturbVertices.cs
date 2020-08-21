@@ -22,6 +22,11 @@ public class PerturbVertices : MonoBehaviour {
         mesh.uv = nuv;
         mesh.triangles = nt;
         mesh.Optimize();
+
+        //UPDATE THE MESH COLLIDER. This code gets used in UseSerializedMesh. Should it be its own thing?
+        DestroyImmediate(this.GetComponent<MeshCollider>());
+        var collider = gameObject.AddComponent<MeshCollider>();
+        collider.sharedMesh = mesh;
     }
 
     void wiggleVector3(ref Vector3 vector, float diff)
@@ -83,7 +88,6 @@ public class PerturbVertices : MonoBehaviour {
                 }
             }
         } while (!verticesUpdatedSuccessfully);
-
 
         MeshSerializer.serializeMesh(mesh, this.name);
 

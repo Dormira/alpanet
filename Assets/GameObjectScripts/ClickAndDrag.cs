@@ -32,9 +32,11 @@ public class ClickAndDrag : MonoBehaviour
     void OnMouseDrag()
     {
         //Get the location on the terrain that we clicked and move the object to five units above that point
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hit;
+        //Must ensure that the object we're using as ground is on the terrain layer
         Physics.Raycast(ray, out hit, 9999, 1 << LayerMask.NameToLayer("Terrain"));
         Vector3 newPoint = ray.GetPoint(hit.distance-1);
         transform.position = newPoint;
