@@ -10,7 +10,6 @@ public class MeshGetters
     public static Mesh getMesh(GameObject objectWithMesh)
     {
         //This function gets the mesh of the object passed to it
-        //This needs to go into a gameobject getcomponents file or something
         if (objectWithMesh.GetComponent<MeshFilter>())
         {
             return objectWithMesh.GetComponent<MeshFilter>().sharedMesh;

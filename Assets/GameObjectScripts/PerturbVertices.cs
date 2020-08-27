@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
+using System;
 
-
+[System.Serializable]
 public class PerturbVertices : MonoBehaviour {
+    public bool saveModel;
+    public float perturbationAmount;
     //This script needs to be placed on the object whose immediate child is the mesh
     void Start() {
         Mesh mesh = MeshGetters.getMesh(this.gameObject);
+        //So my suspicion is that the vertex welding doesn't work on skinned mesh renderers because we're not associating the modified vertices with the appropriate bone anymore.
         GeometryFunctions.weldVertices(mesh);
         perturbMesh();
-
     }
 
     void perturbMesh()
@@ -23,17 +26,21 @@ public class PerturbVertices : MonoBehaviour {
         mesh.triangles = nt;
         mesh.Optimize();
 
-        //UPDATE THE MESH COLLIDER. This code gets used in UseSerializedMesh. Should it be its own thing?
-        DestroyImmediate(this.GetComponent<MeshCollider>());
-        var collider = gameObject.AddComponent<MeshCollider>();
-        collider.sharedMesh = mesh;
+
+        if (this.gameObject.GetComponent<MeshCollider>())
+        {
+            //UPDATE THE MESH COLLIDER. This code gets used in UseSerializedMesh. Should it be its own thing?
+            DestroyImmediate(this.gameObject.GetComponent<MeshCollider>());
+            var collider = this.gameObject.AddComponent<MeshCollider>();
+            collider.sharedMesh = mesh;
+        }
     }
 
-    void wiggleVector3(ref Vector3 vector, float diff)
+    void wiggleVector3(ref Vector3 vector)
     {
-        vector = new Vector3(UnityEngine.Random.Range(vector[0] - diff, vector[0] + diff),
-                                     UnityEngine.Random.Range(vector[1] - diff, vector[1] + diff),
-                                     UnityEngine.Random.Range(vector[2] - diff, vector[2] + diff));
+        vector = new Vector3(UnityEngine.Random.Range(vector[0] - perturbationAmount, vector[0] + perturbationAmount),
+                                     UnityEngine.Random.Range(vector[1] - perturbationAmount, vector[1] + perturbationAmount),
+                                     UnityEngine.Random.Range(vector[2] - perturbationAmount, vector[2] + perturbationAmount));
     }
 
     Vector2[] newUV(Vector3[] vertices)
@@ -49,6 +56,7 @@ public class PerturbVertices : MonoBehaviour {
 
     Vector3[] newVertices()
     {
+        
         Mesh mesh = MeshGetters.getMesh(this.gameObject);
         int[] triangles = mesh.triangles;
 
@@ -64,7 +72,7 @@ public class PerturbVertices : MonoBehaviour {
             //Modify the vertices
             for (int i = 0; i < newVertices.Length; i++)
             {
-                wiggleVector3(ref newVertices[i], 0.1f);
+                wiggleVector3(ref newVertices[i]);
             }
 
             //Check the triangles for collisions
@@ -89,7 +97,10 @@ public class PerturbVertices : MonoBehaviour {
             }
         } while (!verticesUpdatedSuccessfully);
 
-        MeshSerializer.serializeMesh(mesh, this.name);
+        if (this.saveModel) {
+            MeshSerializer.serializeMesh(mesh, this.name);
+        }
+
 
         return newVertices;
     }

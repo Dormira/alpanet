@@ -313,6 +313,7 @@ public class GeometryFunctions{
         //The shame I feel in using Linq is nothing compared to the frustration I'd feel not using Linq
         List<Vector3> vertices = new List<Vector3>(mesh.vertices);
         List<int> triangles = new List<int>(mesh.triangles);
+        List<BoneWeight> boneWeights = new List<BoneWeight>(mesh.boneWeights);
         
         for (int i = 0; i < vertices.Count; i++)
         {
@@ -339,6 +340,13 @@ public class GeometryFunctions{
                     }
                     //Now remove the element at j from vertices because it's a dupe
                     vertices.RemoveAt(j);
+
+                    //update the bones too if applicable
+                    if(boneWeights.Count != 0)
+                    {
+                        boneWeights.RemoveAt(j);
+                    }
+
                     //And we have to redo that j index because the new j is the former j+1
                     j--;
                 }
@@ -347,6 +355,11 @@ public class GeometryFunctions{
 
         mesh.triangles = triangles.ToArray();
         mesh.vertices = vertices.ToArray();
+        if (boneWeights.Count != 0)
+        {
+            mesh.boneWeights = boneWeights.ToArray();
+        }
+
         return (mesh.vertices, mesh.triangles);
     }
 
